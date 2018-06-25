@@ -1,25 +1,27 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
-  context: path.resolve(__dirname, 'src'),
+  mode: 'development', // 追加
   entry: {
-    app : [
-      './app.jsx',
+    'app': [
+      path.resolve(__dirname, 'views/src/app.jsx')
     ]
   },
   output: {
-    path: __dirname + "views/dest/",
     filename: 'bundle.js',
+    path: path.resolve(__dirname, 'views/dest/'),
+    publicPath: '/',
   },
   module: {
     rules: [
       {
-        test: /\.jsx$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['react', 'es2015']
-        },
+        test: /\.(js|jsx)$/,
+        use: 'babel-loader',
       },
-    ]}
-}
+    ]
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
+};

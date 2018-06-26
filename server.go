@@ -1,22 +1,28 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
 	"github.com/gin-gonic/gin"
+	"net/http"
+	"fmt"
 )
-
-func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, World")
-}
 
 func main() {
 	router := gin.Default()
+	
+	router.Static("/assets","./assets")
+	router.LoadHTMLGlob("./templates/*")
+	
 	router.GET("/",func(c *gin.Context){
-		c.JSON(200,gin.H{"id":"1"})
+		c.HTML(http.StatusOK,"index.html",gin.H{})
+	})
+	
+	router.POST("/", func(c *gin.Context) {
+		//入力フィールドの値をtextに格納
+		text := c.PostForm("text")
+		fmt.Print(text)
+
+		c.HTML(http.StatusOK,"index.html",gin.H{})
 	})
 	
 	router.Run(":5000")
-	// http.HandleFunc("/", handler) // ハンドラを登録してウェブページを表示させる
-	// http.ListenAndServe(":8080", nil)
 }

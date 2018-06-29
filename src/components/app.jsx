@@ -15,7 +15,6 @@ class AppFrame extends Component {
     return (
       <main>
         <Switch>
-            <Route exact path="/" component={Root} />
             <Route exact path='/get'   component={Login} />
             <Route exact path='/getbook' component={GetBooks} />
             <Route exact path='/addbook' component={Addbook} />
@@ -23,10 +22,6 @@ class AppFrame extends Component {
       </main>
     );
   }
-}
-
-class Root extends React.Component{
-
 }
 
 class Login extends React.Component{

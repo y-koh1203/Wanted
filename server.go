@@ -18,6 +18,10 @@ func main() {
 		c.HTML(http.StatusOK, "index.html", gin.H{})
 	})
 
+	router.GET("/get", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.html", gin.H{})
+	})
+
 	//router.POST("/", func(c *gin.Context) {
 	//	//入力フィールドの値をtextに格納
 	//	text := c.PostForm("text")

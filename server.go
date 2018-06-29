@@ -5,18 +5,18 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-	//"github.com/makki0205/gojwt"
+	"github.com/makki0205/gojwt"
 )
 
 func main() {
-	//jwt.SetSalt("foo1")
+	jwt.SetSalt("foo1")
 	router := gin.Default()
 
 	router.Static("/assets", "./assets")
 	router.LoadHTMLGlob("./templates/*")
 
 	router.NoRoute(func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.html", gin.H{})
+		c.HTML(http.StatusOK, "index.html", nil)
 	})
 
 	router.GET("/get", func(c *gin.Context) {

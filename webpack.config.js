@@ -5,7 +5,8 @@ module.exports = {
   mode: 'development', // 追加
   entry: {
     'app': [
-      path.resolve(__dirname, 'src/app.jsx')
+      path.resolve(__dirname, 'src/components/app.jsx'),
+      path.resolve(__dirname, 'src/components/user/UserComponent.jsx')
     ]
   },
   output: {

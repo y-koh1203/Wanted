@@ -1,17 +1,27 @@
 package main
 
 import (
-	"net/http"
 	"fmt"
+	"net/http"
 
+	"github.com/Wanted/analysis"
 	"github.com/gin-gonic/gin"
 	"github.com/makki0205/gojwt"
 )
 
 func main() {
-	jwt.SetSalt("foo1")
 	router := gin.Default()
 
+	//形態素解析
+	analysisText := "人魚は、南の方の海にばかり棲んでいるのではありません。北の海にも棲んでいたのであります。" +
+		"北方の海うみの色は、青うございました。あるとき、岩の上に、女の人魚があがって、あたりの景色をながめながら休んでいました。" +
+		"小川未明作 赤い蝋燭と人魚より"
+	analysis.Morphological_analysis(analysisText)
+
+	//ユーザ認証
+	jwt.SetSalt("null")
+
+	//ルーティング
 	router.Static("/assets", "./assets")
 	router.LoadHTMLGlob("./templates/*")
 

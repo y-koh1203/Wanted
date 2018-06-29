@@ -24,6 +24,19 @@
   version = "v1.1.0"
 
 [[projects]]
+  name = "github.com/ikawaha/kagome"
+  packages = [
+    "internal/da",
+    "internal/dic",
+    "internal/dic/data",
+    "internal/lattice",
+    "splitter",
+    "tokenizer"
+  ]
+  revision = "9f4fc8a75bb9761c3cb1fe2d878c2bfdc2d1ba83"
+  version = "v1.7.3"
+
+[[projects]]
   branch = "master"
   name = "github.com/makki0205/gojwt"
   packages = ["."]
@@ -62,6 +75,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "29088442669466c2dedac5435a8a6b503af3bda36350ff45ca7366ee08772b23"
+  inputs-digest = "a9fa07b15a708acd2235c58ed252265e586ba049fe0ebc8706ed200e7a004201"
   solver-name = "gps-cdcl"
   solver-version = 1

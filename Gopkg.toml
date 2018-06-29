@@ -30,6 +30,10 @@
   version = "1.2.0"
 
 [[constraint]]
+  name = "github.com/ikawaha/kagome"
+  version = "1.7.3"
+
+[[constraint]]
   branch = "master"
   name = "github.com/makki0205/gojwt"
 

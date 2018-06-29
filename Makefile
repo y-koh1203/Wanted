@@ -2,5 +2,5 @@ run:
 	go run server.go
 
 dep:
-	dep ensure
+	dep ensure -update
 

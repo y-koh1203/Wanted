@@ -7,5 +7,5 @@
 ### Install MySQL Driver
     go get github.com/go-sql-driver/mysql
 
-### Install xorm
-    go get gihub.com/go-xorm/xorm
+### Install gorm
+    go get github.com/jinzhu/gorm

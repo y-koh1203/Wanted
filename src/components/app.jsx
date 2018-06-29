@@ -1,55 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-ReactDOM.render((
-  <BrowserRouter>
-    <AppFrame />
-  </BrowserRouter>
-  ),
-  document.getElementById('root'),
-);
+const Main = () => (
+    <div>
+        <h1>Hello!</h1>
+    </div>
+)
 
-class AppFrame extends Component {
-  render() {
-    return (
-      <main>
-        <Switch>
-            <Route exact path='/get'   component={Login} />
-            <Route exact path='/getbook' component={GetBooks} />
-            <Route exact path='/addbook' component={Addbook} />
-        </Switch>
-      </main>
-    );
-  }
-}
+const Login = () => (
+    <div>
+        <h2>ok</h2>
+    </div>
+)
 
-class Login extends React.Component{
-    render(){
-        return(
-            <div>
-                test
-            </div>
-        )
-    }
-}
+const App = () => (
+    <div>
+        <Route exact path='/' component={Main} />
+        <Route exact path='/login' component={Login} />
+    </div>
+)
 
-class GetBooks extends React.Component{
-    render(){
-        return(
-            <div>
-                testa
-            </div>
-        )
-    }
-}
-
-class Addbook extends React.Component{
-    render(){
-        return(
-            <div>
-                testb
-            </div>
-        )
-    }
-}
+ReactDOM.render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>,
+    document.getElementById('root'),
+  );

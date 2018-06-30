@@ -35,8 +35,8 @@ func main() {
 
 	router.POST("/admin/post", func(c *gin.Context) {
 		//入力フィールドの値をtextに格納
-		text := c.PostForm("studen_class")
-		fmt.Print(text)
+		text := c.PostForm("student_class")
+		fmt.Println(text)
 
 		c.HTML(http.StatusOK, "index.html", gin.H{})
 	})

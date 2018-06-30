@@ -1,16 +1,20 @@
 import React from 'react';
 
+const style = {
+
+}
+
 export default class Login extends React.Component{
+    onClickButtonHandler(){
+        
+    }
+
     render(){
         return(
-            <header>
-                <nav>
-                    <ul>
-                        <li><Link to="/">page1</Link></li>
-                        <li><Link to="/b">page2</Link></li>
-                    </ul>
-                </nav>
-            </header>
-        );     
+            <div id="login">
+                <input type="text" name="student_class"/>
+                <button type="button" onClick={this.onClickButtonHandler.bind(this)}>Login</button>
+            </div>   
+        )
     }
 }

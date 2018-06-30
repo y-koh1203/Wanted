@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route} from 'react-router-dom';
+import Header from './header/HeaderComponet';
 
 const Main = () => (
     <div>
@@ -24,6 +25,7 @@ class test extends React.Component{
 
 const App = () => (
     <div>
+        <Header />
         <Route exact path='/' component={Main} />
         <Route exact path='/login' component={Login} />
         <Route exact path='/test' component={test} />

@@ -29,6 +29,15 @@ func main() {
 		c.HTML(http.StatusOK, "index.html", gin.H{})
 	})
 
+	//ログイン処理 受け取り
+	router.POST("/login/user", func(c *gin.Context) {
+		//入力フィールドの値をtextに格納
+		status := c.PostForm("student_class")
+		fmt.Println(status)
+
+		c.HTML(http.StatusOK, "index.html", gin.H{})
+	})
+
 	router.GET("/admin", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "admin.html", gin.H{})
 	})

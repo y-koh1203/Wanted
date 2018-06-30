@@ -9,3 +9,6 @@
 
 ### Install gorm
     go get github.com/jinzhu/gorm
+
+### Install kagome
+	go get github.com/ikawaha/kagome/...

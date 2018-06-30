@@ -14,10 +14,19 @@ const Login = () => (
     </div>
 )
 
+class test extends React.Component{
+    render(){
+        return(
+            <div>test</div>
+        )
+    }
+}
+
 const App = () => (
     <div>
         <Route exact path='/' component={Main} />
         <Route exact path='/login' component={Login} />
+        <Route exact path='/test' component={test} />
     </div>
 )
 

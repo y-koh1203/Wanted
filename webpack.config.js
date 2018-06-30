@@ -6,7 +6,8 @@ module.exports = {
   entry: {
     'app': [
       path.resolve(__dirname, 'src/components/app.jsx'),
-      path.resolve(__dirname, 'src/components/user/UserComponent.jsx')
+      //path.resolve(__dirname, 'src/components/user/UserComponent.jsx'),
+      //path.resolve(__dirname, 'src/components/parts/TabView.jsx')
     ]
   },
   output: {

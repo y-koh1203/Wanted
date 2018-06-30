@@ -938,26 +938,14 @@ eval("\n\nvar _createClass = function () { function defineProperties(target, pro
 
 /***/ }),
 
-/***/ "./src/components/user/UserComponent.jsx":
-/*!***********************************************!*\
-  !*** ./src/components/user/UserComponent.jsx ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nvar _react = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _reactDom = __webpack_require__(/*! react-dom */ \"./node_modules/react-dom/index.js\");\n\nvar _reactDom2 = _interopRequireDefault(_reactDom);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError(\"this hasn't been initialised - super() hasn't been called\"); } return call && (typeof call === \"object\" || typeof call === \"function\") ? call : self; }\n\nfunction _inherits(subClass, superClass) { if (typeof superClass !== \"function\" && superClass !== null) { throw new TypeError(\"Super expression must either be null or a function, not \" + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }\n\nvar UserComponent = function (_Component) {\n    _inherits(UserComponent, _Component);\n\n    function UserComponent() {\n        _classCallCheck(this, UserComponent);\n\n        return _possibleConstructorReturn(this, (UserComponent.__proto__ || Object.getPrototypeOf(UserComponent)).apply(this, arguments));\n    }\n\n    _createClass(UserComponent, [{\n        key: 'render',\n        value: function render() {\n            return _react2.default.createElement(\n                'div',\n                { className: 'wrap' },\n                _react2.default.createElement('input', { type: 'text', name: 'main-tb' })\n            );\n        }\n    }]);\n\n    return UserComponent;\n}(_react.Component);\n\nexports.default = UserComponent;\n\n//# sourceURL=webpack:///./src/components/user/UserComponent.jsx?");
-
-/***/ }),
-
 /***/ 0:
-/*!******************************************************************************!*\
-  !*** multi ./src/components/app.jsx ./src/components/user/UserComponent.jsx ***!
-  \******************************************************************************/
+/*!**************************************!*\
+  !*** multi ./src/components/app.jsx ***!
+  \**************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("__webpack_require__(/*! /Users/yamakoh/Wanted/src/components/app.jsx */\"./src/components/app.jsx\");\nmodule.exports = __webpack_require__(/*! /Users/yamakoh/Wanted/src/components/user/UserComponent.jsx */\"./src/components/user/UserComponent.jsx\");\n\n\n//# sourceURL=webpack:///multi_./src/components/app.jsx_./src/components/user/UserComponent.jsx?");
+eval("module.exports = __webpack_require__(/*! /Users/yamakoh/Wanted/src/components/app.jsx */\"./src/components/app.jsx\");\n\n\n//# sourceURL=webpack:///multi_./src/components/app.jsx?");
 
 /***/ })
 

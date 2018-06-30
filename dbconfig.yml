@@ -1,0 +1,4 @@
+development:
+  dialect: mysql
+  datasource: root:@/wanted?parseTime=true
+  dir: ./migrations # ディレクトリを作っておく必要がある

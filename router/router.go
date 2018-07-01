@@ -1,7 +1,6 @@
 package router
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -9,9 +8,7 @@ import (
 
 /**********************	GET	******************************/
 func GetSample(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"json": "hello",
-	})
+
 }
 
 func GetIndex(c *gin.Context) {
@@ -25,10 +22,12 @@ func GetAdmin(c *gin.Context) {
 /**********************	POST ******************************/
 func PostAdmin(c *gin.Context) {
 	//入力フィールドの値をtextに格納
-	text := c.PostForm("student_class")
-	fmt.Println(text)
+	//text := c.PostForm("student_class")
+	c.JSON(200, gin.H{
+		"json": "hello",
+	})
 
-	c.HTML(http.StatusOK, "index.html", nil)
+	//c.HTML(http.StatusOK, "index.html", nil)
 }
 
 /**********************	PUT ******************************/

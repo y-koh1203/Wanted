@@ -10,7 +10,11 @@ export default class Login extends React.Component{
         let student_class_number =  document.querySelector('#student_class').value;
         let params = new URLSearchParams();
         params.append('student_class',student_class_number);
-        axios.post('/login/user',params);
+        axios.post('/login/user',params).then(
+            (res)=>{
+                console.log(res)
+            }
+        );
     }
 
     render(){

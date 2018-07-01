@@ -7,8 +7,8 @@ import (
 
 func main() {
 	r := gin.Default()
-	r.Static(	"/assets", "./assets")
-	r.LoadHTMLGlob("./templates/**/*")
+	r.Static("/assets", "./assets")
+	r.LoadHTMLGlob("./templates/*")
 
 	/**********************	ルーティング ******************************/
 	r.GET("/", router.GetSample)

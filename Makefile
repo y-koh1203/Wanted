@@ -1,14 +1,19 @@
+DBNAME:=test_wanted
+ENV:=development
+
 run:
 	go run server.go
 
-dep:
-	dep ensure -update
+deps:
+	which dep || go get -u github.com/golang/dep/cmd/dep
+	which sql-migrate || go get -u github.com/rubenv/sql-migrate/...
+	dep ensure
 
-migrationUp:
-	sql-migrate up
+migrate/init:
+	mysql -u root -h localhost --protocol tcp -e "CREATE DATABASE \`$(DBNAME)\` DEFAULT CHARACTER SET utf8"
 
-migrationDown:
-	sql-migrate down
+migrate/up:
+	sql-migrate up -env=$(ENV)
 
-migrationStatus:
-	sql-migrate status
+
+

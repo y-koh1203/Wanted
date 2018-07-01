@@ -9,7 +9,6 @@ import (
 
 /**********************	GET	******************************/
 func GetSample(c *gin.Context) {
-
 }
 
 func GetIndex(c *gin.Context) {
@@ -23,18 +22,15 @@ func GetAdmin(c *gin.Context) {
 /**********************	POST ******************************/
 func PostAdmin(c *gin.Context) {
 	//入力フィールドの値をtextに格納
-	//text := c.PostForm("student_class")
-	c.JSON(200, gin.H{
-		"json": "hello",
+	text := c.PostForm("student_class")
+	c.JSON(http.StatusOK, gin.H{
+		"json": text,
 	})
-
-	//c.HTML(http.StatusOK, "index.html", nil)
 }
 
 func PostLogin(c *gin.Context) {
 	//入力フィールドの値をtextに格納
 	id := c.PostForm("student_class")
-	fmt.Println(id)
 
 	c.JSON(http.StatusOK, gin.H{
 		"id":    id,

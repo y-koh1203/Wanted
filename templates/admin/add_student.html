@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<form action="/admin/stdent" method="post">
+    名前<input type="text" name="student_name" id=""><br>
+    パスワード<input type="password" name="password" id=""><br>
+    担当クラス学年 
+    <select name="grade">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+    </select><br>
+    担当クラス<input type="text" name="homeroom_class"><br>
+    <button type="submit">登録</button>
+</form>
+<p><a href="./admin.html">管理画面TOPへ</a></p>
+</body>

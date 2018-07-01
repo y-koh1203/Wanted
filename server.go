@@ -14,6 +14,7 @@ func main() {
 	r.GET("/", router.GetSample)
 	r.GET("/get", router.GetIndex)
 	r.GET("/admin", router.GetAdmin)
+	r.POST("/login/user", router.PostLogin)
 	r.POST("/admin/post", router.PostAdmin)
 	r.NoRoute(router.NoRoute)
 

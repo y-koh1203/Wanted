@@ -31,6 +31,17 @@ func PostAdmin(c *gin.Context) {
 	c.HTML(http.StatusOK, "index.html", nil)
 }
 
+func PostLogin(c *gin.Context) {
+	//入力フィールドの値をtextに格納
+	id := c.PostForm("student_class")
+	fmt.Println(id)
+
+	c.JSON(http.StatusOK, gin.H{
+		"id": id,
+		"token":"WCVBNSKJBBJBDJB",
+	})
+}
+
 /**********************	PUT ******************************/
 /**********************	DELETE ******************************/
 /**********************	NOROUTE ******************************/

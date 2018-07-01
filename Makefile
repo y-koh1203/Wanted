@@ -12,6 +12,3 @@ migrationDown:
 
 migrationStatus:
 	sql-migrate status
-
-
-

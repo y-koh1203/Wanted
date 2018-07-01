@@ -14,6 +14,3 @@ migrate/init:
 
 migrate/up:
 	sql-migrate up -env=$(ENV)
-
-
-

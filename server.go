@@ -11,7 +11,7 @@ func main() {
 	r.LoadHTMLGlob("./templates/*")
 
 	/**********************	ルーティング ******************************/
-	r.GET("/", router.GetSample)
+	r.GET("/", router.GetIndex)
 	r.GET("/get", router.GetIndex)
 	r.GET("/admin", router.GetAdmin)
 	r.POST("/login/user", router.PostLogin)

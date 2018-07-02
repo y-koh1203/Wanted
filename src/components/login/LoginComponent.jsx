@@ -47,7 +47,7 @@ class Login extends React.Component{
             if(res['data']['token'] === null || res['data']['token'] === ''){
                 this.setState({
                     open: true,
-                }).bind(this);
+                });
 
                 return false;
             }

@@ -2,7 +2,6 @@ package router
 
 import (
 	"net/http"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -39,8 +38,8 @@ func PostLogin(c *gin.Context) {
 	id := c.PostForm("student_class")
 
 	c.JSON(http.StatusOK, gin.H{
-		"id": id,
-		"token":"WCVBNSKJBBJBDJB",
+		"id":    id,
+		"token": "WCVBNSKJBBJBDJB",
 	})
 }
 

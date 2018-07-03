@@ -8,19 +8,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tnkTaka/Wanted.git"
+    "url": "git+https://github.com/y-koh1203/Wanted.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tnkTaka/Wanted/issues"
+    "url": "https://github.com/y-koh1203/Wanted/issues"
   },
-  "homepage": "https://github.com/tnkTaka/Wanted#readme",
+  "homepage": "https://github.com/y-koh1203/Wanted#readme",
   "dependencies": {
     "@material-ui/core": "^1.3.0",
+    "@material-ui/icons": "^1.1.0",
     "axios": "^0.18.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
+    "jss": "^9.8.7",
+    "material-ui": "^0.20.1",
     "material-ui-icons": "^1.0.0-beta.36",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
@@ -33,6 +34,9 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "webpack": "^4.12.1",
     "webpack-cli": "^3.0.8"
   }

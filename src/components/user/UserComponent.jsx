@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import HeaderMenu from '../header/HeaderComponet';
 
-export default class UserComponent extends Component {
+export default class UserProfile extends Component {
     render() {
         return (
             <div className="wrap">
-                <input type="text" name="main-tb" />
+                <HeaderMenu />
             </div>
         );
     }

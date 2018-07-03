@@ -18,7 +18,11 @@ func GetAdmin(c *gin.Context) {
 	c.HTML(http.StatusOK, "admin.html", nil)
 }
 
-func GetAdminTeacher(c *gin.Context){
+func GetAdminStudent(c *gin.Context) {
+	c.HTML(http.StatusOK,"add_student.html", nil)
+}
+
+func GetAdminTeacher(c *gin.Context) {
 	c.HTML(http.StatusOK, "add_teacher.html", nil)
 }
 

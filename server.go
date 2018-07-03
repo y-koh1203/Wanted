@@ -14,6 +14,7 @@ func main() {
 	r.GET("/", router.GetIndex)
 	r.GET("/get", router.GetIndex)
 	r.GET("/admin", router.GetAdmin)
+	r.GET("/admin/student", router.GetAdminStudent)
 	r.GET("/admin/teacher", router.GetAdminTeacher)
 	r.POST("/login/user", router.PostLogin)
 	r.POST("/admin/post", router.PostAdmin)

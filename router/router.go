@@ -18,6 +18,10 @@ func GetAdmin(c *gin.Context) {
 	c.HTML(http.StatusOK, "admin.html", nil)
 }
 
+func GetAdminTeacher(c *gin.Context){
+	c.HTML(http.StatusOK, "add_teacher.html", nil)
+}
+
 /**********************	POST ******************************/
 func PostTeacher(c *gin.Context) {
 	teacherName := c.PostForm("teacher_name")

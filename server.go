@@ -14,9 +14,9 @@ func main() {
 	r.GET("/", router.GetIndex)
 	r.GET("/get", router.GetIndex)
 	r.GET("/admin", router.GetAdmin)
+	r.GET("/admin/teacher", router.GetAdminTeacher)
 	r.POST("/login/user", router.PostLogin)
 	r.POST("/admin/post", router.PostAdmin)
-	r.POST("/admin/teacher", router.PostTeacher)
 	r.NoRoute(router.NoRoute)
 
 	/**********************	サーバ起動 ******************************/

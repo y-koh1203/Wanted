@@ -3,6 +3,7 @@ package router
 import (
 	"net/http"
 	"github.com/gin-gonic/gin"
+	"fmt"
 )
 
 /**********************	GET	******************************/
@@ -18,6 +19,20 @@ func GetAdmin(c *gin.Context) {
 }
 
 /**********************	POST ******************************/
+func PostTeacher(c *gin.Context) {
+	teacherName := c.PostForm("teacher_name")
+	teacherPassword := c.PostForm("teacher_password")
+	teacherGradeHomeroom := c.PostForm("teacher_grade_homeroom")
+	teacherHomeroom := c.PostForm("teacher_class")
+
+	fmt.Println(teacherName)
+	fmt.Println(teacherPassword)
+	fmt.Println(teacherGradeHomeroom)
+	fmt.Println(teacherHomeroom)
+
+	//c.JSON(http.StatusOK,
+}
+
 func PostAdmin(c *gin.Context) {
 	//入力フィールドの値をtextに格納
 	text := c.PostForm("student_class")

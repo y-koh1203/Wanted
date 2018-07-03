@@ -16,6 +16,7 @@ func main() {
 	r.GET("/admin", router.GetAdmin)
 	r.POST("/login/user", router.PostLogin)
 	r.POST("/admin/post", router.PostAdmin)
+	r.POST("/admin/teacher", router.PostTeacher)
 	r.NoRoute(router.NoRoute)
 
 	/**********************	サーバ起動 ******************************/

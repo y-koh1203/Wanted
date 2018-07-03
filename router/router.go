@@ -19,6 +19,13 @@ func GetAdmin(c *gin.Context) {
 }
 
 /**********************	POST ******************************/
+func PostTeacher(c *gin.Context) {
+	//入力フィールドの値をtextに格納
+	//name := c.PostForm("student_name")
+
+	//c.JSON(http.StatusOK,
+}
+
 func PostAdmin(c *gin.Context) {
 	//入力フィールドの値をtextに格納
 	text := c.PostForm("student_class")

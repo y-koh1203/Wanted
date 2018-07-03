@@ -10,7 +10,7 @@ func main() {
 	r.Static("/assets", "./assets")
 	r.LoadHTMLGlob("./templates/*")
 
-	/**********************	ルーティング ******************************/
+	/**********************	ルCーティング ******************************/
 	r.GET("/", router.GetIndex)
 	r.GET("/get", router.GetIndex)
 	r.GET("/admin", router.GetAdmin)

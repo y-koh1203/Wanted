@@ -7,6 +7,7 @@ CREATE TABLE `teachers` (
   `teacher_grade_homeroom` INT(1) NOT NULL COMMENT '担当学年',
   `teacher_homeroom` VARCHAR(10) NOT NULL COMMENT '担当クラス',
   `teacher_password` CHAR(8) NOT NULL COMMENT 'パスワード',
+  `delete_flg` INT(1) NOT NULL COMMENT '削除フラグ',
   `create_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '作成日',
   `update_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日'
 );

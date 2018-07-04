@@ -16,8 +16,11 @@ func main() {
 	r.GET("/admin", router.GetAdmin)
 	r.GET("/admin/student", router.GetAdminStudent)
 	r.GET("/admin/teacher", router.GetAdminTeacher)
+
 	r.POST("/login/user", router.PostLogin)
-	r.POST("/admin/post", router.PostAdmin)
+	r.POST("/admin/teacher/post", router.PostTeacher)
+	r.POST("/admin/student/post", router.PostStudent)
+
 	r.NoRoute(router.NoRoute)
 
 	/**********************	サーバ起動 ******************************/

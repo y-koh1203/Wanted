@@ -7,11 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-<form action="/admin/stdent" method="post">
-    名前<input type="text" name="student_name" id=""><br>
-    パスワード<input type="password" name="password" id=""><br>
-    担当クラス学年 
-    <select name="grade">
+<form action="/admin/student/post" method="post">
+    生徒名前<input type="text" name="student_name" id=""><br>
+    生徒パスワード<input type="password" name="student_login_password" id=""><br>
+    学年
+    <select name="student_grade">
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -19,7 +19,8 @@
         <option value="5">5</option>
         <option value="6">6</option>
     </select><br>
-    担当クラス<input type="text" name="homeroom_class"><br>
+    クラス<input type="text" name="student_class"><br>
+    クラス出席番号<input type="text" name="student_class_number"><br>
     <button type="submit">登録</button>
 </form>
 <p><a href="/admin">管理画面TOPへ</a></p>

@@ -6,20 +6,43 @@ import TextField from '@material-ui/core/TextField';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Button from '@material-ui/core/Button';
 
-const styles = theme => ({
-    container: {
-      display: 'flex',
-      flexWrap: 'wrap',
+const styles = {
+    bgImage : {
+        boxSizing:'border-box',
+        // backgroundImage: "url(\"/assets/images/blackboard.jpg\")",
+        // backgroundRepeat: 'no-repeat' ,
+        // backgroundPosition: 'center' ,
+        // backgroundSize:'cover',
+        width: '100%',
+        height: '100vh',
     },
-    textField: {
-      marginLeft: theme.spacing.unit,
-      marginRight: theme.spacing.unit,
-      width: 200,
+    
+    centering : {
+        margin: '0 auto',
+        textAlign: 'center',
     },
-    menu: {
-      width: 200,
+    
+    flex : {
+        display : 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
-});
+
+    sizes : {
+        width: '50vw'
+    },
+
+    padd : {
+        padding: '5% 0'
+    },
+
+    button: {
+        verticalAlign:'middle',
+        padding: '0 5%',
+        marginTop: '3%'
+    }
+};
 
 class Login extends React.Component{
 
@@ -93,25 +116,32 @@ class Login extends React.Component{
     render(){
         return(
             <MuiThemeProvider>
-                <div id="login">             
+                <div id="login" style={Object.assign({}, ...[styles.bgImage, styles.centering, styles.flex])}>     
+                    <h1>ようこそ</h1>
                     <form noValidate autoComplete="off">
-                        <div>
+                        <div style={Object.assign({}, ...[styles.centering, styles.padd])}>
                             <TextField
                                 id="student_class"
                                 label="なまえ"
                                 margin="normal"
+                                style={Object.assign({}, ...[styles.sizes])}
                             />
                         </div>
-                        <div>
+                        <div style={Object.assign({}, ...[styles.centering, styles.padd])}>
                             <TextField
                                 id="password"
                                 label="生年月日"
                                 type="password"
                                 margin="normal"
+                                style={Object.assign({}, ...[styles.sizes])}
                             />
                         </div>
-                        <div>
-                            <Button variant="extendedFab" aria-label="delete" onClick={this.onClickButtonHandler.bind(this)}>
+                        <div style={styles.centering}>
+                            <Button 
+                                variant="extendedFab" 
+                                onClick={this.onClickButtonHandler.bind(this)}
+                                style={Object.assign({},...[styles.button])}
+                            >
                                 はじめる
                             </Button>
                         </div>

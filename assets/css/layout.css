@@ -3,3 +3,25 @@
 * { 
     box-sizing: border-box;
 }
+
+#root{
+    width: 100%;
+}
+
+@media screen and (min-width:480px) { 
+    .hoge { 
+        color:#333333;
+    }
+}
+    
+@media screen and (min-width:768px) and ( max-width:1024px) {
+    .hoge {
+        color:#000000;
+    }
+}
+
+@media screen and (min-width:1024px) {
+    .hoge {
+        color:#fff000;
+    }  
+}

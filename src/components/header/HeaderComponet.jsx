@@ -1,17 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-
-import MenuIcon from '@material-ui/icons/Menu';
-
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 
 const styles = {
     root: {
@@ -19,11 +12,16 @@ const styles = {
     },
     flex: {
       flex: 1,
+      alignItrems: 'center',
     },
     menuButton: {
       marginLeft: -12,
       marginRight: 20,
-    }
+    },
+    size:{
+        height: '10vh',
+        verticalAlign: 'middle'
+    },
 };
 
 class HeaderMenu extends React.Component {
@@ -51,8 +49,8 @@ class HeaderMenu extends React.Component {
 
         return (
             <div className={classes.root}>
-                <AppBar position="static">
-                    <Toolbar>
+                <AppBar position="static" style={styles.size}>
+                    <Toolbar style={styles.flex}>
                         <Typography 
                             variant="title" 
                             color="inherit" 
@@ -61,28 +59,6 @@ class HeaderMenu extends React.Component {
                         >
                         Title
                         </Typography>
-                        {auth && (
-                        <div>
-                            <IconButton
-                                aria-owns={open ? 'menu-appbar' : null}
-                                aria-haspopup="true"
-                                onClick={this.handleMenu}
-                                color="inherit"
-                            >
-                                <MenuIcon />
-                            </IconButton>
-                            <Menu
-                                id="simple-menu"
-                                anchorEl={anchorEl}
-                                open={Boolean(anchorEl)}
-                                onClose={this.handleClose}
-                            >
-                                <MenuItem onClick={this.handleClose}><Link to="/">Home</Link></MenuItem>
-                                <MenuItem onClick={this.handleClose}><Link to="/login">Login</Link></MenuItem>
-                                <MenuItem onClick={this.handleClose}><Link to="/test">test</Link></MenuItem>
-                            </Menu>
-                        </div>
-                        )}
                     </Toolbar>
                 </AppBar>
             </div>

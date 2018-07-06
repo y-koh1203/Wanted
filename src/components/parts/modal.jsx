@@ -5,22 +5,32 @@ import QuestionAnswer from '@material-ui/icons/QuestionAnswer';
 import PersonIcon from '@material-ui/icons/Person';
 import Home from '@material-ui/icons/Home';
 import ExitToApp from '@material-ui/icons/ExitToApp';
+import Menu from '@material-ui/icons/Menu';
+import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
 
 const customStyles = {
   content : {
-    top                   : '20%',
-    left                  : '50%',
+    top                   : '50%',
+    left                  : 'auto',
     right                 : 'auto',
     bottom                : 'auto',
-    marginRight           : '-20%',
-    transform             : 'translate(-50%, -50%)'
+    width                 : '60vw',
+    marginLeft            : '50%',
+    transform             : 'translate(-50%, -50%)',
+    zIndex                : '100',
   },
   overlay : {
     backgroundColor: 'rgba(0, 0, 0, 0.4)'
   }
 };
+
+const menuButtonStyles = {
+  top: '80%',
+  left: '80%',
+  position: 'fixed'
+}
 
 
 class ModalWindow extends React.Component {
@@ -52,7 +62,15 @@ class ModalWindow extends React.Component {
   render() {
     return (
       <div>
-        <button onClick={this.openModal}>Open Modal</button>
+        <Button 
+          variant="fab" 
+          color="primary" 
+          aria-label="add" 
+          onClick={this.openModal} 
+          style={menuButtonStyles}
+        >
+          <Menu />
+        </Button>
 
         <Modal
           isOpen={this.state.modalIsOpen}

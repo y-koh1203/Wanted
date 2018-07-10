@@ -16,7 +16,7 @@ const customStyles = {
     left                  : 'auto',
     right                 : 'auto',
     bottom                : 'auto',
-    width                 : '60vw',
+    width                 : '80vw',
     marginLeft            : '50%',
     transform             : 'translate(-50%, -50%)',
     zIndex                : '100',
@@ -30,6 +30,23 @@ const menuButtonStyles = {
   top: '80%',
   left: '80%',
   position: 'fixed'
+}
+
+const styles = {
+  buttonWrap:{
+    width: '20%',
+  },
+
+  buttonIcons:{
+    width: '80%',
+    height: 'auto'
+  },
+
+  flex: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  }
 }
 
 
@@ -49,6 +66,8 @@ class ModalWindow extends React.Component {
   openModal() {
     this.setState({modalIsOpen: true});
   }
+
+  onClickLogout(){}
 
   afterOpenModal() {
     // references are now sync'd and can be accessed.
@@ -80,25 +99,37 @@ class ModalWindow extends React.Component {
           contentLabel="Example Modal"
         >
 
-          <h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>
+          <h2 ref={subtitle => this.subtitle = subtitle}>メニュー</h2>
           <button onClick={this.closeModal}>close</button>
-          <div>I am a modal</div>
-          <div>
-            <button>
-              <Link to="/"><Home /></Link>
-            </button>
-            
-            <button>
-              <Link to="/"><PersonIcon /></Link>
-            </button>
+          <div style={styles.flex}>
+            <div style={Object.assign({},...[styles.buttonWrap])}>
+              <button>
+                <Link to="/"><Home style={Object.assign({},...[styles.buttonIcons])}/></Link>
+              </button>
+              <p>ホーム</p>
+            </div>
 
-            <button>
-              <Link to="/question"><QuestionAnswer /></Link>
-            </button>
-            
-            <button>
-              <Link to="/"><ExitToApp /></Link>
-            </button>
+            <div style={Object.assign({},...[styles.buttonWrap])}>
+              <button>
+                <Link to="/"><PersonIcon style={Object.assign({},...[styles.buttonIcons])} /></Link>
+              </button>
+              <p>プロフィール</p>
+            </div>
+
+            <div style={Object.assign({},...[styles.buttonWrap])}>
+              <button>
+                <Link to="/question"><QuestionAnswer style={Object.assign({},...[styles.buttonIcons])} /></Link>
+              </button>
+              <p>質問</p>
+            </div>
+
+            <div style={Object.assign({},...[styles.buttonWrap])}>
+              <button>
+                <Link to="/"><ExitToApp style={Object.assign({},...[styles.buttonIcons])} /></Link>
+              </button>    
+              <p>ログアウト</p>
+            </div>
+          
           </div>
         </Modal>
       </div>

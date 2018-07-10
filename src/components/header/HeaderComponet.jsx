@@ -22,6 +22,9 @@ const styles = {
         height: '10vh',
         verticalAlign: 'middle'
     },
+    color:{
+        backgroundColor:"#7cf1dc"
+    }
 };
 
 class HeaderMenu extends React.Component {
@@ -49,7 +52,7 @@ class HeaderMenu extends React.Component {
 
         return (
             <div className={classes.root}>
-                <AppBar position="static" style={styles.size}>
+                <AppBar position="static" style={styles.size,styles.color}>
                     <Toolbar style={styles.flex}>
                         <Typography 
                             variant="title" 
@@ -57,7 +60,7 @@ class HeaderMenu extends React.Component {
                             className={classes.flex}
                             style={{textAlign:"center"}}    
                         >
-                        Title
+                        {this.props.headerName}
                         </Typography>
                     </Toolbar>
                 </AppBar>

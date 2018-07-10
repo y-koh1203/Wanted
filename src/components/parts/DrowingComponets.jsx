@@ -172,8 +172,11 @@ export default class DrawingArea extends React.Component{
         return(
             <div>
                 <div id="candiv" style={style}>
-                    <canvas id="can" onTouchStart={this.onDown.bind(this)} 
-                        onTouchMove={this.onMove.bind(this)} onTouchEnd={this.onUp.bind(this)} onMouseDown={this.onMouseDown.bind(this)} onMouseMove={this.onMouseMove.bind(this)} onMouseUp={this.onMouseUp.bind(this)} style={style}></canvas>
+                    <canvas id="can" 
+                        onTouchStart={this.onDown.bind(this)} 
+                        onTouchMove={this.onMove.bind(this)} onTouchEnd={this.onUp.bind(this)} 
+                        onMouseDown={this.onMouseDown.bind(this)} onMouseMove={this.onMouseMove.bind(this)}
+                        onMouseUp={this.onMouseUp.bind(this)} style={style}></canvas>
                 </div> 
                 <input type="button" onClick={this.clearCanvas.bind(this)} value="クリア" data-inline="true" />
             </div>        

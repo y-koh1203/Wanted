@@ -1,17 +1,25 @@
 package controller
 
-import "github.com/Wanted/model"
+import (
+	"github.com/gin-gonic/gin"
+	"strconv"
+	"fmt"
+	"net/http"
+	"github.com/wanted/model"
+)
 
-type Teacher struct {
-}
+func PostTeacher(c *gin.Context) {
+	teacherName := c.PostForm("teacher_name")
+	teacherPassword := c.PostForm("teacher_password")
+	teacherHomeroom := c.PostForm("teacher_homeroom")
+	TeacherGradeHomeroom := c.PostForm("teacher_grade_homeroom")
+	intTeacherGradeHomeroom, _ := strconv.Atoi(TeacherGradeHomeroom)
 
-func NewTeacher() Teacher {
-	return Teacher{}
-}
+	post := model.CreateTeacher(teacherName, teacherPassword, teacherHomeroom, intTeacherGradeHomeroom)
+	if !post {
+		fmt.Println("作成失敗")
+	}
 
-//教師の追加
-func (c Teacher) CreateTask(teacherName string, teacherPassword string, teacherHomeroom string, teacherGradeHomeroom int) bool {
-	repo := model.NewTeacherRepository()
-	teacher := repo.CreateTeacher(teacherName, teacherPassword, teacherHomeroom, teacherGradeHomeroom)
-	return teacher
+	fmt.Println(teacherName, teacherPassword, teacherHomeroom, intTeacherGradeHomeroom)
+	c.HTML(http.StatusOK, "add_teacher.html", nil)
 }

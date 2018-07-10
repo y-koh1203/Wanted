@@ -1,36 +1,51 @@
 package model
 
-// 教師テーブルの構造体
+import "fmt"
+
+// Studentテーブルの構造体
+type StudentTable struct {
+	StudentId            int
+	StudentName          string
+	StudentGrade         int
+	StudentClass         string
+	StudentClassNumber   int
+	StudentLoginId       string
+	StudentLoginPassword string
+	StudentNickName      string
+	StudentProfileImage  string
+	DeleteFlg            int
+}
+
+// 生徒のプロフィール用構造体
 type Student struct {
-	StudentId            int    `json:"student_id"`
-	StudentName          string `json:"student_name""`
-	StudentGrade         int    `json:"student_grade""`
-	StudentClass         string `json:"student_class""`
-	StudentClassNumber   int    `json:"student_class_number""`
-	StudentLoginId       string `json:"student_login_id"`
-	StudentLoginPassword string `json:"student_login_password"`
-	DeleteFlg            int    `json:"delete_flf"`
+	StudentId           int    `json:"student_id"`
+	StudentName         string `json:"student_name"`
+	StudentGrade        int    `json:"student_grade"`
+	StudentClass        string `json:"student_class"`
+	StudentClassNumber  int    `json:"student_class_number"`
+	StudentNickName     string `json:"student_nick_name"`
+	StudentProfileImage string `json:"student_profile_image"`
 }
 
-type StudentRepository struct{}
-
-func NewStudentRepository() StudentRepository {
-	return StudentRepository{}
-}
-
+var studentTable StudentTable
 var student Student
 var students []Student
 
-//生徒の追加
-func (m StudentRepository) CreateStudent(studentName string, studentGrade int, studentClass string, studentClassNumber int, studentLoginId string, studentLoginPassword string) bool {
+func GetByStudentId(id int) *Student {
 	db := GormConnect()
-	student.StudentName = studentName
-	student.StudentGrade = studentGrade
-	student.StudentClass = studentClass
-	student.StudentClassNumber = studentClassNumber
-	student.StudentLoginId = studentLoginId
-	student.StudentLoginPassword = studentLoginPassword
-	student.DeleteFlg = 1
+	defer db.Close()
+	fmt.Println(id)
+
+	db.Where("student_id = ?", id).First(&student)
+	return &student
+}
+
+func CreateStudent(studentName string, studentGrade int, studentClass string, studentClassNumber int, studentLoginId string, studentLoginPassword string) bool {
+	db := GormConnect()
+
+	studentTable.StudentName = studentName
+
 	db.Create(&student)
+	defer db.Close()
 	return true
 }

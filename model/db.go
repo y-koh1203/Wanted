@@ -20,5 +20,7 @@ func GormConnect() *gorm.DB {
 		panic(err.Error())
 	}
 
+	db.LogMode(true)
+
 	return db
 }

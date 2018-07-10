@@ -1,35 +1,39 @@
 import React, { Component } from 'react';
-import HeaderMenu from '../header/HeaderComponet';
 import PropTypes from 'prop-types';
+import HeaderMenu from '../header/HeaderComponet';
+
 import ModalWindow from '../parts/modal'
+import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
+// import DrawingArea from '../parts/DrowingComponets'
+
+import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
+
+import QuestionList from '../Question/QuestionList'
 
 const styles = {
     main : {
         borderRadius:'40px',
-        backgroundColor:'green',
+        // backgroundColor:'#eceee9',
         width: '87%',
         minHeight: '100vh',
         margin: '18% auto 0 auto',
         position: 'relative',
         zIndex: '0',
-        paddingTop: 'calc((85vw / 100vh) * 100)'
     },
 
     icon_circle : {
         borderRadius: '50%',
         width: '34%',
         height: '29vw',
-        backgroundColor: 'blue',
         position: 'absolute',
-        top: '-10%',
-        left: '32.5%',
+        top: '-14vw',
+        left: '28vw',
         zIndex: '0',
-        paddingTop: 'calc((35% / 22.5%) * 100)'
     },
 
     bigAvatar: {
@@ -40,16 +44,75 @@ const styles = {
         alignItems: 'center'
     },
 
-    root: {
-        flexGrow: 1,
-    },
-
     nameBox: {
-        paddingTop: '20%',
+        paddingTop: '18%',
     },
 
     tabBox : {
-        marginTop: '10%'
+        marginTop: '8%',
+        whiteSpace: 'nowrap'
+    },
+
+    tabLabel: { 
+        padding: '0 10%',
+        margin: '0 5%',
+        whiteSpace: 'nowrap',
+    },
+
+    text_h1: {
+        textAlign: 'center',
+    },
+
+    button: {
+        verticalAlign:'middle',
+        padding: '0 8%',
+        marginTop: '5%',
+        backgroundColor: '#ffff',
+        fontSize: '2.2vh',
+        // border: '2px solid black'
+    },
+
+    centering: {
+        margin: '0 auto',
+        textAlign: 'center',
+    },
+
+    fontLg: {
+        fontSize: '4.2vh',
+        fontWeight: 'lighter'
+    },
+
+    fontMd: {
+        fontSize: '2.2vh',
+        fontWeight: 'lighter'
+    },
+
+    fontSm: {
+        fontSize: '1rem',
+    },
+
+    nickname: {
+        marginTop: '-3.5%'
+    },
+
+    colorMain: { 
+        backgroundColor:"#ededed"
+    },
+
+    colorSub: {
+        backgroundColor:"#7cf1dc"
+    },
+
+    classAndGrade: {
+        marginTop: '1.5%',
+        fontSize: '2.6vh',
+    },
+
+    myQusetions: {
+        paddingTop: '10%',
+        fontSize: '2.6vh',
+        fontWeight: 'lighter',
+        marginBottom: '2%'
     }
 }
 
@@ -69,22 +132,87 @@ export default class UserProfile extends Component {
 
     state = {
         value: 0,
+        questionList:{}
     };
     
     handleChange = (event, value) => {
         this.setState({ value });
     };
 
+    componentWillMount(){
+
+    }
+
+    //全ての教えた質問を取得する
+    handleDaughtQuestionAll(){
+        let student_id = localStorage.getItem('student_id');
+
+        //let student_select_pattern = document.getElementsByName('pattern');
+
+
+        const promise = new Promise((resolve ,reject) => {
+            axios.get('/question/user/:student_id', {
+                params: {
+                  student_id: 1
+                }
+            }).then(
+                (res) => {
+                    resolve(res);
+                },
+
+                () => {
+                    reject();
+                }
+            );
+        });
+
+        promise.then(
+            (res)=>{
+
+            }
+        ).catch(()=>{
+
+        });
+
+    }
+
+    //全ての聞いた質問を取得する
+    handleHeardQuestionAll(){
+        const promise = new Promise((resolve ,reject) => {
+            axios.get('/question/answer/user/:student_id', {
+                params: {
+                  student_id: 1
+                }
+            }).then(
+                (res) => {
+                    resolve(res);
+                },
+
+                () => {
+                    reject();
+                }
+            );
+        });
+
+        promise.then(
+            (res)=>{
+
+            }
+        ).catch(()=>{
+
+        });
+
+    }
+
     render() {
-        //const { classes } = this.props;
         const { value } = this.state;
         return (
             <div className="wrap">
-                <HeaderMenu />
+                <HeaderMenu headerName="プロフィール" />
              
                 <div className="main">
-                    <div id="user_profile_area" style={styles.main}>
-                        <div id="icon_circle" className="iconCircle" style={styles.icon_circle}>
+                    <div id="user_profile_area" style={Object.assign({},...[styles.main,styles.colorMain])}>
+                        <div id="icon_circle" className="iconCircle" style={Object.assign({},...[styles.icon_circle,styles.colorSub])}>
                             <Avatar
                                 alt="Adelle Charles"
                                 src="/assets/images/student.png"
@@ -93,26 +221,57 @@ export default class UserProfile extends Component {
                         </div>
 
                         <div style={Object.assign({},...[styles.nameBox])}>
-                            <h1>name</h1>
+                            <h1 style={Object.assign({},...[styles.text_h1,styles.fontLg])}>{localStorage.getItem("user_name")}</h1>
+                            <p style={Object.assign({},...[styles.centering,styles.fontMd,styles.nickname])}>{localStorage.getItem("nickname")}</p>
+                            <p style={Object.assign({},...[styles.centering,styles.fontMd,styles.classAndGrade])}>{localStorage.getItem("grade")}年　{localStorage.getItem("class")}組</p>
+
+                            <div style={styles.centering}>
+                                <Button 
+                                    variant="extendedFab" 
+                                    // onClick={this.onClickButtonHandler.bind(this)}
+                                    style={Object.assign({},...[styles.button])}
+                                >
+                                    自己紹介を変更する
+                                </Button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h2 style={Object.assign({},...[styles.centering,styles.myQusetions])}>じぶんのきろく</h2>
+                            <Divider />
                         </div>
 
                         <div style={Object.assign({},...[styles.tabBox])}>
                             <Paper className="root">
                                 <Tabs
-                                value={this.state.value}
-                                onChange={this.handleChange}
-                                indicatorColor="primary"
-                                textColor="primary"
-                                centered
+                                    value={this.state.value}
+                                    onChange={this.handleChange}
+                                    indicatorColor="primary"
+                                    textColor="primary"
+                                    style={Object.assign({},...[styles.tabLabel,styles.fontMd])}
+                                    //style={Object.assign({},...[styles.paper])}
+                                    centered
                                 >
-                                    <Tab label="おしえた" style={{padding:"0 8%"}} />
-                                    <Tab label="きいた" style={{margin:"0 8%"}}/>
+                                    <Tab label="おしえた" style={Object.assign({},...[styles.tabLabel,styles.fontMd])} />
+                                    <Tab label="きいた" style={Object.assign({},...[styles.tabLabel,styles.fontMd])}/>
                                 </Tabs>
                             </Paper>
-                            {value === 0 && <TabContainer>Item One</TabContainer>}
-                            {value === 1 && <TabContainer>Item Two</TabContainer>}
-                            {value === 2 && <TabContainer>Item Three</TabContainer>}
+                            {value === 0 && 
+                                <TabContainer>
+                                    <div className="taught">
+                                       {/* <QuestionList questionList={this.state.questionList} /> */}
+                                    </div>
+                                </TabContainer>
+                            }
 
+                            {value === 1 && 
+                                <TabContainer>
+                                    <div className="heard">
+                                        <div className="answerContainer">
+                                       </div>
+                                    </div>
+                                </TabContainer>
+                            }
                         </div>
                     </div>
                 </div>

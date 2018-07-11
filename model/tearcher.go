@@ -1,5 +1,6 @@
 package model
 
+// 教師テーブルの構造体
 type Teacher struct {
 	TeacherId            int    `json:"teacher_id"`
 	TeacherName          string `json:"teacher_name"`

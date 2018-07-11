@@ -132,28 +132,49 @@ export default class UserProfile extends Component {
 
     state = {
         value: 0,
-        questionList:{}
+        questionList:{
+            question : [
+                {
+                    question_id: 11,
+                    question_title: "算数の問題がわかりません",
+                    genre: "算数",
+                    question_body: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    question_tags: ["算数","数学","情報"],
+                    question_date: "2017/07/07/sun",
+                    post_user: "ymko",
+                    icon: "/path"
+                },	
+                {
+                    question_id: 11,
+                    question_title: 11,
+                    genre: 11,
+                    question_body: 11,
+                    question_tags: [1,2,3],
+                    question_date: '2017/07/07/sun',
+                    post_user: 'ymko',
+                    icon: '/path'
+                },
+            ]
+        }
     };
     
     handleChange = (event, value) => {
         this.setState({ value });
     };
 
+    //質問表示の初期状態
     componentWillMount(){
-
+        this.handleTaughtQuestionAll;
     }
 
     //全ての教えた質問を取得する
-    handleDaughtQuestionAll(){
+    handleTaughtQuestionAll(){
         let student_id = localStorage.getItem('student_id');
-
-        //let student_select_pattern = document.getElementsByName('pattern');
-
 
         const promise = new Promise((resolve ,reject) => {
             axios.get('/question/user/:student_id', {
                 params: {
-                  student_id: 1
+                  student_id: student_id
                 }
             }).then(
                 (res) => {
@@ -178,10 +199,12 @@ export default class UserProfile extends Component {
 
     //全ての聞いた質問を取得する
     handleHeardQuestionAll(){
+        let student_id = localStorage.getItem('student_id');
+
         const promise = new Promise((resolve ,reject) => {
             axios.get('/question/answer/user/:student_id', {
                 params: {
-                  student_id: 1
+                  student_id: student_id
                 }
             }).then(
                 (res) => {
@@ -259,7 +282,7 @@ export default class UserProfile extends Component {
                             {value === 0 && 
                                 <TabContainer>
                                     <div className="taught">
-                                       {/* <QuestionList questionList={this.state.questionList} /> */}
+                                       <QuestionList questionList={this.state.questionList} />
                                     </div>
                                 </TabContainer>
                             }

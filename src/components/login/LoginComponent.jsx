@@ -123,7 +123,8 @@ class Login extends React.Component{
                 });
                 return false;
             }
-            
+
+            //各種情報をローカルストレージにセット
             localStorage.setItem('user_name','山田太郎');
             localStorage.setItem('nickname','ヤマトロー');
             localStorage.setItem('class','B');
@@ -166,7 +167,7 @@ class Login extends React.Component{
                         <div style={Object.assign({}, ...[styles.centering, styles.padd])}>
                             <TextField
                                 id="student_class"
-                                label="クラス + しゅっせきばんごう　(れい ： 1A31)"
+                                label="クラス + しゅっせきばんごう"
                                 margin="normal"
                                 style={Object.assign({}, ...[styles.sizes])}
                             />

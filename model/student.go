@@ -1,7 +1,5 @@
 package model
 
-import "fmt"
-
 // Studentテーブルの構造体
 type Student struct {
 	StudentId            int
@@ -20,11 +18,10 @@ type Student struct {
 type StudentProfile struct {
 	StudentId           int    `json:"student_id"`
 	StudentName         string `json:"student_name"`
-	StudentGrade        int    `json:"student_grade"`
-	StudentClass        string `json:"student_class"`
-	StudentClassNumber  int    `json:"student_class_number"`
-	StudentNickName     string `json:"student_nick_name"`
-	StudentProfileImage string `json:"student_profile_image"`
+	StudentGrade        int    `json:"grade"`
+	StudentClass        string `json:"class"`
+	StudentNickName     string `json:"nickname"`
+	StudentProfileImage string `json:"path"`
 }
 
 var student Student
@@ -34,9 +31,8 @@ var studentProfile StudentProfile
 func GetByStudentId(id int) *StudentProfile {
 	db := GormConnect()
 	defer db.Close()
-	fmt.Println(id)
 
-	db.Raw("SELECT student_id, student_name, student_grade, student_class, student_class_number, student_nick_name, student_profile_image FROM students WHERE student_id = ?", id).Scan(&studentProfile)
+	db.Raw("SELECT student_id, student_name, student_grade, student_class, student_nick_name, student_profile_image FROM students WHERE student_id = ?", id).Scan(&studentProfile)
 	return &studentProfile
 }
 

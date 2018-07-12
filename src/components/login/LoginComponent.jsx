@@ -94,7 +94,7 @@ class Login extends React.Component{
         //params.append('pattern',select_no);
 
         const promise = new Promise((resolve ,reject) => {
-            axios.post('/login',params).then(
+            axios.post('/student/login',params).then(
                 (res) => {
                     console.log(res);
                     resolve(res);

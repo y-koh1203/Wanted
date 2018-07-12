@@ -8,6 +8,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
+import Axios from '../../../node_modules/axios';
+import { withRouter } from 'react-router';
 
 const styles = {
     container: { 
@@ -19,13 +21,18 @@ const styles = {
 }
 
 export default class QuestionList extends React.Component{
+    handleDispatch(s){
+        console.log(s);
+    }
+
     render(){
+
         let questionLists = this.props.questionList['question'];
         let lists = [];
         
         //if(numberOfQuesiton > 0) {
             for(let i in questionLists){
-                let tags = [];          
+                let tags = []; 
                 for(let t in questionLists[i].question_tags){
                     tags.push(
                         <Chip
@@ -43,7 +50,7 @@ export default class QuestionList extends React.Component{
                         <Card>
                             <CardContent>
                                 <Typography gutterBottom variant="headline" component="h2">
-                                    {questionLists[i].question_title}
+                                    <a href="#" id={i} onClick={this.handleDispatch(i)}>{quesztionLists[i].question_title}</a>
                                 </Typography>
                                 <Typography component="p">
                                     {questionLists[i].question_body}

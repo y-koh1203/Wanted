@@ -290,8 +290,7 @@ export default class UserProfile extends Component {
                             {value === 1 && 
                                 <TabContainer>
                                     <div className="heard">
-                                        <div className="answerContainer">
-                                       </div>
+                                        <QuestionList questionList={this.state.questionList} />
                                     </div>
                                 </TabContainer>
                             }

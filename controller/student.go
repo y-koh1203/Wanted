@@ -36,3 +36,19 @@ func PostStudent(c *gin.Context) {
 	fmt.Println(studentName, intStudentGrade, studentClass, intStudentClassNumber, studentLoginId, studentLoginPassword)
 	c.HTML(http.StatusOK, "add_student.html", nil)
 }
+
+func LoginStudent(c *gin.Context) {
+	loginId := c.PostForm("login_id")
+	loginPassWord := c.PostForm("pattern")
+
+	studentProfile, token, nil := model.LoginStudent(loginId, loginPassWord)
+
+	if !nil {
+		c.JSON(http.StatusNotFound, nil)
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"studentProfile": studentProfile,
+		"jwtToken":       token,
+	})
+}

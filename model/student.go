@@ -1,5 +1,7 @@
 package model
 
+import "github.com/Wanted/middleware"
+
 // Studentテーブルの構造体
 type Student struct {
 	StudentId            int
@@ -30,9 +32,9 @@ var studentProfile StudentProfile
 
 func GetByStudentId(id int) *StudentProfile {
 	db := GormConnect()
-	defer db.Close()
 
 	db.Raw("SELECT student_id, student_name, student_grade, student_class, student_nick_name, student_profile_image FROM students WHERE student_id = ?", id).Scan(&studentProfile)
+	db.Close()
 	return &studentProfile
 }
 
@@ -46,9 +48,22 @@ func CreateStudent(studentName string, studentGrade int, studentClass string, st
 	student.StudentClassNumber = studentClassNumber
 	student.StudentLoginId = studentLoginId
 	student.StudentLoginPassword = studentLoginPassword
-	student.StudentNickName = "ななし"
+	student.StudentNickName = "名無し"
 	student.StudentProfileImage = "default.png"
 
 	db.Create(&student)
+	db.Close()
 	return true
+}
+
+func LoginStudent(loginId string, loginPassWord string) (*StudentProfile, string, bool) {
+	db := GormConnect()
+
+	if not := db.Where("student_login_id = ? AND student_login_password = ?", loginId, loginPassWord).First(&student).Scan(&studentProfile).Error; not != nil {
+		return nil, "", false
+	}
+	token := middleware.NewJwt(loginId, loginPassWord)
+
+	db.Close()
+	return &studentProfile, token, true
 }

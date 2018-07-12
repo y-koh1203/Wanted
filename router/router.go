@@ -12,7 +12,6 @@ func GetRouter() *gin.Engine {
 	r.Static("/assets", "./assets")
 	r.LoadHTMLGlob("./templates/*")
 
-	r.POST("/login", nil)
 	r.NoRoute(func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", nil)
 	})

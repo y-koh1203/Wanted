@@ -168,6 +168,7 @@ class Login extends React.Component{
                             <TextField
                                 id="student_class"
                                 label="クラス + しゅっせきばんごう"
+                                name="login_id"
                                 margin="normal"
                                 style={Object.assign({}, ...[styles.sizes])}
                             />

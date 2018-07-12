@@ -6,10 +6,6 @@ import TextField from '@material-ui/core/TextField';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Button from '@material-ui/core/Button';
 
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-
 const styles = {
     bgImage : {
         boxSizing:'border-box',
@@ -122,11 +118,11 @@ class Login extends React.Component{
                 console.log(res);
 
                 //各種情報をローカルストレージにセット
-                localStorage.setItem('user_name','山田太郎');
-                localStorage.setItem('nickname','ヤマトロー');
-                localStorage.setItem('class','B');
-                localStorage.setItem('grade','4')
-                localStorage.setItem('jwt','aaa');
+                localStorage.setItem('user_name', res['data']['studentProfile']['student_name']);
+                localStorage.setItem('nickname', res['data']['studentProfile']['nickname']);
+                localStorage.setItem('class', res['data']['studentProfile']['class']);
+                localStorage.setItem('grade', res['data']['studentProfile']['grade'])
+                localStorage.setItem('jwt', res['data']['jwtToken']);
                 
                 this.props.history.push('/user');
         }).catch((err)=>{

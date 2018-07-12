@@ -119,6 +119,8 @@ class Login extends React.Component{
                     return false;
                 }
 
+                console.log(res);
+
                 //各種情報をローカルストレージにセット
                 localStorage.setItem('user_name','山田太郎');
                 localStorage.setItem('nickname','ヤマトロー');

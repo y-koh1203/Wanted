@@ -93,45 +93,33 @@ class Login extends React.Component{
         params.append('student_class',student_class_number);
         params.append('pattern',student_select_pattern);
 
-        const promise = new Promise((resolve ,reject) => {
-            axios.post('/student/login',params).then(
-                (res) => {
-                    console.log(res);
-                    resolve(res);
-                },
+        axios.post('/student/login',params).then(
+            (res) => {
 
-                ()=>{
-                    reject('(*_*;)');
+                if(res['data']['id'] === null || res['data']['id'] === ''){
+                    this.setState({
+                        open: true,
+                        message: '名前かパターンが違います'
+                    });
+                    return false;
                 }
-            );
-        });
 
-        promise.then((res)=>{
+                if(res['data']['token'] === null || res['data']['token'] === ''){
+                    this.setState({
+                        open: true,
+                        message: '名前かパターンが違います'
+                    });
+                    return false;
+                }
 
-            if(res['data']['id'] === null || res['data']['id'] === ''){
-                this.setState({
-                    open: true,
-                    message: '名前かパターンが違います'
-                });
-                return false;
-            }
-
-            if(res['data']['token'] === null || res['data']['token'] === ''){
-                this.setState({
-                    open: true,
-                    message: '名前かパターンが違います'
-                });
-                return false;
-            }
-
-            //各種情報をローカルストレージにセット
-            localStorage.setItem('user_name','山田太郎');
-            localStorage.setItem('nickname','ヤマトロー');
-            localStorage.setItem('class','B');
-            localStorage.setItem('grade','4')
-            localStorage.setItem('jwt','aaa');
-            
-            this.props.history.push('/user');
+                //各種情報をローカルストレージにセット
+                localStorage.setItem('user_name','山田太郎');
+                localStorage.setItem('nickname','ヤマトロー');
+                localStorage.setItem('class','B');
+                localStorage.setItem('grade','4')
+                localStorage.setItem('jwt','aaa');
+                
+                this.props.history.push('/user');
         }).catch((err)=>{
             console.log(err);
             this.setState({

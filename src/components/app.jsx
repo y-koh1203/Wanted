@@ -20,6 +20,7 @@ const App = () => (
         <div>
             <Route exact path='/' component={Login} />
             <Route exact path='/login' component={Login} />
+            <Route exact path='/student/login' component={Login} />
             <Route exact path='/user' component={UserProfile} />
             {/* <Route exact path='/question/all' component={Questions} />
             <Route exact path='/question/detail/:question_id' component={Questions} /> */}

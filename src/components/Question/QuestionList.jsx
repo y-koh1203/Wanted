@@ -50,7 +50,7 @@ export default class QuestionList extends React.Component{
                         <Card>
                             <CardContent>
                                 <Typography gutterBottom variant="headline" component="h2">
-                                    <a href="#" id={i} onClick={this.handleDispatch(i)}>{quesztionLists[i].question_title}</a>
+                                    <a href="#" id={i} onClick={this.handleDispatch(i)}>{questionLists[i].question_title}</a>
                                 </Typography>
                                 <Typography component="p">
                                     {questionLists[i].question_body}

@@ -87,14 +87,14 @@ class Login extends React.Component{
 
     onClickButtonHandler(){
         let student_class_number =  document.querySelector('#student_class').value;
-        //let student_select_pattern = document.getElementsByName('pattern');
+        let student_select_pattern = document.getElementsByName('pattern');
 
         let params = new URLSearchParams();
         params.append('student_class',student_class_number);
-        //params.append('pattern',select_no);
+        params.append('pattern',student_select_pattern);
 
         const promise = new Promise((resolve ,reject) => {
-            axios.post('/student/login',params).then(
+            axios.post('/student/login/:student_id',params).then(
                 (res) => {
                     console.log(res);
                     resolve(res);

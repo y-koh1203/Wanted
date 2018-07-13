@@ -78,7 +78,7 @@ class Login extends React.Component{
 
         this.onClickButtonHandler = this.onClickButtonHandler.bind(this);
         this.handleRequestClose = this.handleRequestClose.bind(this);
-        this.handleCbChange = this.handleCbChange.bind(this);
+        // this.handleCbChange = this.handleCbChange.bind(this);
     }
 
     onClickButtonHandler(){
@@ -92,13 +92,14 @@ class Login extends React.Component{
             }
         }
 
+        //paramsにpostするデータを追加
         let params = new URLSearchParams();
         params.append('login_id',student_class_number);
         params.append('pattern',val);
 
+        //Ajaxでのログイン処理
         axios.post('/student/login',params).then(
             (res) => {
-
                 if(res['data']['id'] === null || res['data']['id'] === ''){
                     this.setState({
                         open: true,
@@ -126,6 +127,7 @@ class Login extends React.Component{
                 
                 this.props.history.push('/user');
         }).catch((err)=>{
+            //通信失敗時のコールバック
             console.log(err);
             this.setState({
                 open: true,
@@ -133,16 +135,6 @@ class Login extends React.Component{
             });
             return false;
         });
-
-    }
-
-    handleCbChange(){
-        let cbValue = document.getElementsByClassName('login_patterns');
-        for(let i = 0;i < cbValue.length;i++){
-            if(cbValue[i].checked === true){
-                cbValue[i].checked = false;
-            }
-        }
     }
 
     handleRequestClose(){
@@ -151,6 +143,7 @@ class Login extends React.Component{
         });
     }
 
+    //コンポーネントをレンダリング
     render(){
         return(
             <MuiThemeProvider>
@@ -181,13 +174,11 @@ class Login extends React.Component{
 
                                 <div className="animal_image_pattern" style={Object.assign({},...[styles.patternImgWrap])}>
                                     {/* <img src="/assets/images/rabbit_img.png" alt="" style={styles.patterImg}/> */}
-                                    {/* <FormControlLabel value="3" name="pattern" control={<Radio />} label="val3" /> */}
                                     <input type="radio" name="pattern" id="" value="3" />val3
                                 </div>
 
                                 <div className="animal_image_pattern" style={Object.assign({},...[styles.patternImgWrap])}>
                                     {/* <img src="/assets/images/lion_img.png" alt="" style={styles.patterImg}/> */}
-                                    {/* <FormControlLabel value="4" name="pattern" control={<Radio />} label="val4" /> */}
                                     <input type="radio" name="pattern" id="" value="4" />val4
                                 </div>
                             </div>

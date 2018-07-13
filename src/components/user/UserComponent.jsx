@@ -17,35 +17,38 @@ import QuestionList from '../Question/QuestionList'
 
 const styles = {
     main : {
-        borderRadius:'40px',
+        borderRadius:'30px',
         // backgroundColor:'#eceee9',
-        width: '87%',
+        width: '90%',
         minHeight: '100vh',
-        margin: '18% auto 0 auto',
-        position: 'relative',
+        margin: '5% auto 0 auto',
         zIndex: '0',
+    },
+
+    profileBox:{
+        width: '100%',
+        margin: '0 auto',   
+        display: 'flex',
+        flexDirection: 'row',
     },
 
     icon_circle : {
-        borderRadius: '50%',
-        width: '34%',
-        height: '29vw',
-        position: 'absolute',
-        top: '-14vw',
-        left: '28vw',
-        zIndex: '0',
+       width: '30%',
+       verticalAlign: 'middle',
+       borderRadius:'30px 0 0 0',
     },
 
     bigAvatar: {
-        width: '12vw',
+        width: '14vw',
         height: 'auto',
-        margin: '25% auto 0 auto',
+        margin: '7vh auto 0 auto',
         display: 'flex',
         alignItems: 'center'
     },
 
     nameBox: {
-        paddingTop: '18%',
+        width: '70%',
+        borderRadius:'0 30px 0 0',
     },
 
     tabBox : {
@@ -54,7 +57,7 @@ const styles = {
     },
 
     tabLabel: { 
-        padding: '0 10%',
+        padding: '1% 10% 0 10%',
         margin: '0 5%',
         whiteSpace: 'nowrap',
     },
@@ -145,7 +148,7 @@ export default class UserProfile extends Component {
                     icon: "/path"
                 },	
                 {
-                    question_id: 11,
+                    question_id: 12,
                     question_title: 11,
                     genre: 11,
                     question_body: 11,
@@ -235,29 +238,32 @@ export default class UserProfile extends Component {
              
                 <div className="main">
                     <div id="user_profile_area" style={Object.assign({},...[styles.main,styles.colorMain])}>
-                        <div id="icon_circle" className="iconCircle" style={Object.assign({},...[styles.icon_circle,styles.colorSub])}>
-                            <Avatar
-                                alt="Adelle Charles"
-                                src="/assets/images/student.png"
-                                style={styles.bigAvatar}
-                            />
-                        </div>
+                        <div style={Object.assign({},...[styles.profileBox])}>
+                            <div id="icon_circle" className="iconCircle" style={Object.assign({},...[styles.icon_circle])}>
+                                <Avatar
+                                    alt="Adelle Charles"
+                                    src="/assets/images/student.png"
+                                    style={styles.bigAvatar}
+                                />
+                            </div>
 
-                        <div style={Object.assign({},...[styles.nameBox])}>
-                            <h1 style={Object.assign({},...[styles.text_h1,styles.fontLg])}>{localStorage.getItem("user_name")}</h1>
-                            <p style={Object.assign({},...[styles.centering,styles.fontMd,styles.nickname])}>{localStorage.getItem("nickname")}</p>
-                            <p style={Object.assign({},...[styles.centering,styles.fontMd,styles.classAndGrade])}>{localStorage.getItem("grade")}年　{localStorage.getItem("class")}組</p>
+                            <div style={Object.assign({},...[styles.nameBox])}>
+                                <h1 style={Object.assign({},...[styles.text_h1,styles.fontLg])}>{localStorage.getItem("user_name")}</h1>
+                                <p style={Object.assign({},...[styles.centering,styles.fontMd,styles.nickname])}>{localStorage.getItem("nickname")}</p>
+                                <p style={Object.assign({},...[styles.centering,styles.fontMd,styles.classAndGrade])}>{localStorage.getItem("grade")}年　{localStorage.getItem("class")}組</p>
 
-                            <div style={styles.centering}>
-                                <Button 
-                                    variant="extendedFab" 
-                                    // onClick={this.onClickButtonHandler.bind(this)}
-                                    style={Object.assign({},...[styles.button])}
-                                >
-                                    自己紹介を変更する
-                                </Button>
+                                {/* <div style={styles.centering}>
+                                    <Button 
+                                        variant="extendedFab" 
+                                        // onClick={this.onClickButtonHandler.bind(this)}
+                                        style={Object.assign({},...[styles.button])}
+                                    >
+                                        自己紹介を変更する
+                                    </Button>
+                                </div> */}
                             </div>
                         </div>
+                     
 
                         <div>
                             <h2 style={Object.assign({},...[styles.centering,styles.myQusetions])}>じぶんのきろく</h2>

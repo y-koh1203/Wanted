@@ -4,12 +4,12 @@ import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import { withRouter } from 'react-router';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
 import Axios from '../../../node_modules/axios';
-import { withRouter } from 'react-router';
 
 const styles = {
     container: { 
@@ -20,9 +20,10 @@ const styles = {
     },
 }
 
-export default class QuestionList extends React.Component{
-    handleDispatch(s){
-        console.log(s);
+class QuestionList extends React.Component{
+    handleDispatch(i){
+        console.log(i);
+        this.props.history.push('/question/detail');
     }
 
     render(){
@@ -50,7 +51,7 @@ export default class QuestionList extends React.Component{
                         <Card>
                             <CardContent>
                                 <Typography gutterBottom variant="headline" component="h2">
-                                    <a href="#" id={i} onClick={this.handleDispatch.bind(this,i)}>{questionLists[i].question_title}</a>
+                                    <a href="#" key={i} onClick={this.handleDispatch.bind(this,questionLists[i].question_id)}>{questionLists[i].question_title}</a>
                                 </Typography>
                                 <Typography component="p">
                                     {questionLists[i].question_body}
@@ -75,3 +76,5 @@ export default class QuestionList extends React.Component{
         )
     }
 }
+
+export default withRouter(QuestionList);

@@ -20,6 +20,7 @@ const styles = {
         borderRadius:'30px',
         // backgroundColor:'#eceee9',
         width: '90%',
+        maxWidth: '960px',
         minHeight: '100vh',
         margin: '5% auto 0 auto',
         zIndex: '0',

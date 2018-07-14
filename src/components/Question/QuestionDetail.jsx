@@ -1,12 +1,10 @@
 import React from 'react';
-
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import Chip from '@material-ui/core/Chip';
-import Axios from '../../../node_modules/axios';
+import axios from 'axios';
 import { withRouter } from 'react-router';
+import Snackbar from 'material-ui/Snackbar';
+import TextField from '@material-ui/core/TextField';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Button from '@material-ui/core/Button';
 
 const styles = {
     container: { 
@@ -19,16 +17,21 @@ const styles = {
 
 export default class QuestionList extends React.Component{
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            open: false,
-            question:{},
-        };
-    }
+    state = {
+        open: false,
+        question:{},
+        questionId:'',
+    };
 
     componentWillMount(){
-        const question_id = this.props.questionId;
+        const question_id = localStorage.getItem('question_id');
+        localStorage.removeItem('question_id');
+
+        this.setState({
+            questionId:question_id,
+        });
+
+        console.log(this.state.questionId);
         
         axios.get('/question/detail', {
             params: {
@@ -48,17 +51,21 @@ export default class QuestionList extends React.Component{
             }
         ).catch(
             (err)=>{
-                console.log(err);
+                console.log(err.response.status);
                 console.log('connection rejected.');
             }
         );
+    }
+
+    handlePostAnswer(){
+        console.log(this.state.questionId);
     }
 
     render(){
 
         return(
             <div>
-               a
+               <button onClick={this.handlePostAnswer.bind(this)}>aaa</button>
             </div>
         )
     }

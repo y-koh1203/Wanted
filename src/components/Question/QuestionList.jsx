@@ -22,7 +22,8 @@ const styles = {
 
 class QuestionList extends React.Component{
     handleDispatch(i){
-        console.log(i);
+        // console.log(i);
+        localStorage.setItem('question_id',i);
         this.props.history.push('/question/detail');
     }
 

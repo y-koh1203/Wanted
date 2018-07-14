@@ -98,41 +98,39 @@ class Login extends React.Component{
         params.append('pattern',val);
 
         //Ajaxでのログイン処理
-        axios.post('/student/login',params).then(
-            (res) => {
-                if(res['data']['id'] === null || res['data']['id'] === ''){
-                    this.setState({
-                        open: true,
-                        message: '名前かパターンが違います'
-                    });
-                    return false;
-                }
+        axios.post('/student/login',params).then((res) => {
+            if(res['data']['jwtToken'] === null || res['data']['jwtToken'] === ''){
+                this.setState({
+                    open: true,
+                    message: '名前かパターンが違います'
+                });
+                return false;
+            }
 
-                if(res['data']['token'] === null || res['data']['token'] === ''){
-                    this.setState({
-                        open: true,
-                        message: '名前かパターンが違います'
-                    });
-                    return false;
-                }
-
-                console.log(res);
-
-                //各種情報をローカルストレージにセット
-                localStorage.setItem('user_name', res['data']['studentProfile']['student_name']);
-                localStorage.setItem('nickname', res['data']['studentProfile']['nickname']);
-                localStorage.setItem('class', res['data']['studentProfile']['class']);
-                localStorage.setItem('grade', res['data']['studentProfile']['grade'])
-                localStorage.setItem('jwt', res['data']['jwtToken']);
-                
-                this.props.history.push('/user');
+            //各種情報をローカルストレージにセット
+            localStorage.setItem('user_name', res['data']['studentProfile']['student_name']);
+            localStorage.setItem('nickname', res['data']['studentProfile']['nickname']);
+            localStorage.setItem('class', res['data']['studentProfile']['class']);
+            localStorage.setItem('grade', res['data']['studentProfile']['grade'])
+            localStorage.setItem('jwt', res['data']['jwtToken']);
+            
+            this.props.history.push('/user');
         }).catch((err)=>{
             //通信失敗時のコールバック
-            console.log(err);
+            let msg;
+            if(err.response == undefined){
+                msg = '通信に失敗しました';
+            }else if(err.response.status == 404){
+                msg = '名前かパターンが違います';
+            }else{
+                msg = '500 ISE.';
+            }
+
             this.setState({
                 open: true,
-                message: '通信に失敗しました。通信状況を確認し、再度お試しください。'
+                message: msg
             });
+            
             return false;
         });
     }

@@ -13,7 +13,7 @@ export default function reducer(state = initilaState,action){
             // stateを直接変更しないよう、Object.assignでstateを複製
             return Object.assign({},state,{
                 //actionから渡された値でstateを書き換える
-                userName: action.text
+                userName: action.
             });
 
         case 'SET_USER_ID':

@@ -103,12 +103,11 @@ export default class QuestionList extends React.Component{
         params.append('body',body);
         params.append('genre',genre);
 
-
         //Ajaxでのログイン処理
         axios.post('/question/post',params).then((res) => {
             
-            ()=>{
-                console.log(1);
+            (res)=>{
+                console.log(res);
             },
             ()=>{
                 console.log(0);

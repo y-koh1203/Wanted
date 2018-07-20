@@ -141,8 +141,8 @@ export default class QuestionList extends React.Component{
             <div>
                 <p>投稿者:{this.state.student_name}</p>
                 <TextField
-                    id="質問タイトル"
-                    label="Name"
+                    id="title"
+                    label="質問タイトル"
                     value={this.state.name}
                     onChange={this.handleTextChange.bind(this)}
                     margin="normal"

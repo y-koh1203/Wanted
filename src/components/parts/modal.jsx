@@ -8,6 +8,7 @@ import ExitToApp from '@material-ui/icons/ExitToApp';
 import Menu from '@material-ui/icons/Menu';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 
 const customStyles = {
@@ -69,6 +70,10 @@ class ModalWindow extends React.Component {
 
   onClickLogout(){}
 
+  // onClickPostQuestion(){
+  //   this.props.history.push('question/post');
+  // }
+
   afterOpenModal() {
     // references are now sync'd and can be accessed.
     this.subtitle.style.color = '#f00';
@@ -118,7 +123,7 @@ class ModalWindow extends React.Component {
 
             <div style={Object.assign({},...[styles.buttonWrap])}>
               <button>
-                <Link to="/question"><QuestionAnswer style={Object.assign({},...[styles.buttonIcons])} /></Link>
+                <Link to="/question/post"><QuestionAnswer style={Object.assign({},...[styles.buttonIcons])} /></Link>
               </button>
               <p>質問</p>
             </div>
@@ -137,4 +142,4 @@ class ModalWindow extends React.Component {
   }
 }
 
-export default withStyles(customStyles)(ModalWindow);
+export default withRouter(withStyles(customStyles)(ModalWindow));

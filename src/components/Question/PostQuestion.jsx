@@ -112,7 +112,7 @@ export default class QuestionList extends React.Component{
         console.log(words);
 
         //Ajaxでのログイン処理
-        axios.post('/question/post',params).then(          
+        axios.get('/question/post',params).then(          
             (r)=>{
                 console.log(r);
             },

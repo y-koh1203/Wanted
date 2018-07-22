@@ -51,55 +51,78 @@ export default class QuestionList extends React.Component{
         this.setState({select:value});
     }
 
+    handleTextChange(e){
+        let value = e.target.value;
+        this.setState({question_title:value});
+    }
+
     handleBodyTextChange(e){
         let value = e.target.value;
         this.setState({body:value});
     }
 
     handleClickSubmit(){
+
         let student_id = this.state.student_id;
         let jwt = this.state.jwt;
         let question_title = this.state.question_title;
         let body = this.state.body;
         let genre = this.state.genre;
 
-        //paramsにpostするデータを追加
-        let params = new URLSearchParams();
-        params.append('student_id',student_id);
-        params.append('question_title',question_title);
-        params.append('body',body);
-        params.append('genre',genre);
-        params.append('jwt',jwt);
+        let key = process.env.API_KEY;
 
-        //Ajaxでのログイン処理
-        axios.post('/question/post',params).then((res) => {
-            
+        let params_keyword = new URLSearchParams();
+        params_keyword.append('app_id',key);
+        params_keyword.append('title','test');
+        params_keyword.append('body','消費税しょうひぜいの影響えいきょうで、うちの商品しょうひんも値上ねあげせざるをえない状況じょうきょうです。');
+        params_keyword.append('max_num',20)
+
+        axios.post('https://labs.goo.ne.jp/api/keyword',params_keyword).then(
             (res)=>{
                 console.log(res);
             },
             ()=>{
-                console.log(0);
+                console.log('fail');
             }
+        )
 
-            this.props.history.push('/user');
-        }).catch((err)=>{
-            //通信失敗時のコールバック
-            let msg;
-            if(err.response == undefined){
-                msg = '通信に失敗しました';
-            }else if(err.response.status == 404){
-                msg = '名前かパターンが違います';
-            }else{
-                msg = '500 ISE.';
-            }
+        //paramsにpostするデータを追加
+        // let params = new URLSearchParams();
+        // params.append('student_id',student_id);
+        // params.append('question_title',question_title);
+        // params.append('body',body);
+        // params.append('genre',genre);
+        // params.append('jwt',jwt);
 
-            this.setState({
-                open: true,
-                message: msg
-            });
+        // //Ajaxでのログイン処理
+        // axios.post('/question/post',params).then((res) => {
             
-            return false;
-        });
+        //     (res)=>{
+        //         console.log(res);
+        //     },
+        //     ()=>{
+        //         console.log(0);
+        //     }
+
+        //     this.props.history.push('/user');
+        // }).catch((err)=>{
+        //     //通信失敗時のコールバック
+        //     let msg;
+        //     if(err.response == undefined){
+        //         msg = '通信に失敗しました';
+        //     }else if(err.response.status == 404){
+        //         msg = '名前かパターンが違います';
+        //     }else{
+        //         msg = '500 ISE.';
+        //     }
+
+        //     this.setState({
+        //         open: true,
+        //         message: msg
+        //     });
+            
+        //     return false;
+        // });
     }
 
     render(){

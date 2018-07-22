@@ -6,8 +6,6 @@ import QuestionDetail from './Question/QuestionDetail';
 import PostQuestion from './Question/PostQuestion';
 
 import { render } from 'react-dom'
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
 
 
 const App = () => (

@@ -13,10 +13,10 @@ func questionRouter(question *gin.RouterGroup) {
 	//回答した質問一覧(特定ユーザー)
 	question.GET("/answer/user/:student_id", nil)
 	//質問詳細
-	question.GET("/answer/detail/:question_id", controller.GetQuestionDetail)
+	question.GET("/detail/:question_id", controller.GetQuestionDetail)
 
 	//質問投稿
-	question.POST("/post", nil)
+	question.POST("/post", controller.PostQuestion)
 	//回答投稿
 	question.POST("/answer/post", nil)
 }

@@ -13,7 +13,7 @@ type Teacher struct {
 var teacher Teacher
 var teachers []Teacher
 
-func CreateTeacher(teacherName string, teacherPassword string, teacherHomeroom string, teacherGradeHomeroom int) bool {
+func CreateTeacher(teacherName, teacherPassword, teacherHomeroom string, teacherGradeHomeroom int) bool {
 	db := GormConnect()
 	teacher.TeacherName = teacherName
 	teacher.TeacherPassword = teacherPassword

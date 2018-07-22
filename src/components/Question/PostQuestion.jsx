@@ -100,19 +100,29 @@ export default class QuestionList extends React.Component{
         )
 
         //paramsにpostするデータを追加
-        let params = new URLSearchParams();
-        params.append('student_id',student_id);
-        params.append('question_title',question_title);
-        params.append('body',body);
-        params.append('genre',genre);
-        params.append('jwt',jwt);
-        params.append('tags',words);
+        // let params = new URLSearchParams();
+        // params.append('student_id',student_id);
+        // params.append('question_title',question_title);
+        // params.append('body',body);
+        // params.append('genre',genre);
+        // params.append('jwt',jwt);
+        // params.append('tags',words);
 
         console.log(student_id);
         console.log(words);
 
         //Ajaxでのログイン処理
-        axios.get('/question/post',params).then(          
+        axios.get('/question/post',
+        {
+            params:{
+                student_id:student_id,
+                question_title:question_title,
+                body:body,
+                genre:genre,
+                jwt:jwt,
+                tags:tags
+            }
+        }).then(          
             (r)=>{
                 console.log(r);
             },

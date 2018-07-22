@@ -26,63 +26,29 @@ export default class QuestionList extends React.Component{
     state = {
         open: false,
 
-        student_name:'',
+        student_id:'',
         title: '',
         genre: '',
         body: '',
         posted_date: '',
+        jwt: '',
 
         select:'',
     };
 
     componentWillMount(){
-        let student_name = localStorage.getItem('user_name');
-        this.setState({student_name:student_name});
-        // const question_id = localStorage.getItem('question_id');
-        // localStorage.removeItem('question_id');
+        let jwt = localStorage.getItem('jwt');
+        let student_id = localStorage.getItem('student_id');
+        this.setState({
+            student_id:student_id,
+            jwt:jwt,
+        });
 
-        // this.setState({
-        //     questionId:question_id,
-        // });
-
-        // console.log(this.state.questionId);
-        
-        // axios.get('/question/detail', {
-        //     params: {
-        //       // ここにクエリパラメータを指定する
-        //       question_id: question_id
-        //     }
-        // }).then(
-        //     (res) => {
-        //         console.log(res);
-        //         this.setState({
-        //             question: res
-        //         });
-        //     },
-
-        //     () => {
-        //         console.log('connection rejected.');
-        //     }
-        // ).catch(
-        //     (err)=>{
-        //         console.log(err.response.status);
-        //         console.log('connection rejected.');
-        //     }
-        // );
     }
-
-    // handlePostAnswer(){
-    //     console.log(this.state.questionId);
-    // }
 
     handleSelectChange(e){
         let value = e.target.value;
         this.setState({select:value});
-    }
-
-    handleTextChange(e){
-        let value = e.target.value;
-        this.setState({title:value});
     }
 
     handleBodyTextChange(e){
@@ -91,17 +57,19 @@ export default class QuestionList extends React.Component{
     }
 
     handleClickSubmit(){
-        let student_name = this.state.student_name;
+        let student_id = this.state.student_id;
+        let jwt = this.state.jwt;
         let question_title = this.state.question_title;
         let body = this.state.body;
         let genre = this.state.genre;
 
         //paramsにpostするデータを追加
         let params = new URLSearchParams();
-        params.append('student_name',student_name);
+        params.append('student_id',student_id);
         params.append('question_title',question_title);
         params.append('body',body);
         params.append('genre',genre);
+        params.append('jwt',jwt);
 
         //Ajaxでのログイン処理
         axios.post('/question/post',params).then((res) => {
@@ -142,19 +110,19 @@ export default class QuestionList extends React.Component{
                 <TextField
                     id="title"
                     label="質問タイトル"
-                    value={this.state.name}
+                    value="質問タイトル"
                     onChange={this.handleTextChange.bind(this)}
                     margin="normal"
                 />
 
                 <br />
 
-                <InputLabel htmlFor="age-simple">Age</InputLabel>
+                <InputLabel htmlFor="age-simple">科目</InputLabel>
                 <Select
                     value={this.state.select}
                     onChange={this.handleSelectChange.bind(this)}
                     inputProps={{
-                    name: '科目',
+                    name: 'class',
                     id: 'age-simple',
                     }}
                 >
@@ -178,7 +146,6 @@ export default class QuestionList extends React.Component{
                     label="質問本文"
                     multiline
                     rows="4"
-                    defaultValue="Default Value"
                     margin="normal"
                     onChange={this.handleBodyTextChange.bind(this)}
                 />
@@ -189,7 +156,7 @@ export default class QuestionList extends React.Component{
                     variant="outlined"
                     onClick={this.handleClickSubmit.bind(this)}
                 >
-                    Default
+                    投稿する
                 </Button>
             </div>
         )

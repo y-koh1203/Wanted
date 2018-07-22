@@ -16,7 +16,7 @@ func questionRouter(question *gin.RouterGroup) {
 	question.GET("/detail/:question_id", controller.GetQuestionDetail)
 
 	//質問投稿
-	question.POST("/post", controller.PostQuestion)
+	question.GET("/post", controller.PostQuestion)
 	//回答投稿
 	question.POST("/answer/post", nil)
 }

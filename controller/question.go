@@ -35,14 +35,14 @@ func GetQuestionDetail(c *gin.Context) {
 }
 
 func PostQuestion(c *gin.Context) {
-	studentId := c.PostForm("student_id")
-	questionTitle := c.PostForm("question_title")
-	questionBody := c.PostForm("body")
+	studentId := c.Query("student_id")
+	questionTitle := c.Query("question_title")
+	questionBody := c.Query("body")
 	questionGenre := c.PostFormArray("genre")
 
 	fmt.Println(c.PostFormArray("tags"))
 
-	jwtToken := c.PostForm("jwt")
+	jwtToken := c.Query("jwt")
 	_, err := jwt.Decode(jwtToken)
 	if err != nil {
 		c.JSON(http.StatusNotFound, nil)

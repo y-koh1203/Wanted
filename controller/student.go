@@ -28,7 +28,7 @@ func PostStudent(c *gin.Context) {
 	intStudentGrade, _ := strconv.Atoi(studentGrade)
 	intStudentClassNumber, _ := strconv.Atoi(studentClassNumber)
 
-	post := model.CreateStudent(studentName, intStudentGrade, studentClass, intStudentClassNumber, studentLoginId, studentLoginPassword)
+	post := model.CreateStudent(studentName, studentClass, studentLoginId, studentLoginPassword, intStudentClassNumber, intStudentGrade)
 	if !post {
 		fmt.Println("作成失敗")
 	}
@@ -47,8 +47,13 @@ func LoginStudent(c *gin.Context) {
 		c.JSON(http.StatusNotFound, nil)
 	}
 
+	myQuestion := model.GetMyQuestions(studentProfile.StudentId)
+	myAnswer := model.GetMyAnswers(studentProfile.StudentId)
+
 	c.JSON(http.StatusOK, gin.H{
 		"studentProfile": studentProfile,
+		"myQuestion":     myQuestion,
+		"myAnswer":       myAnswer,
 		"jwtToken":       token,
 	})
 }

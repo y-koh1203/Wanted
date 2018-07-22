@@ -74,3 +74,44 @@ func GetQuestionDetail(id int) *Question {
 
 	return &question
 }
+
+func GetMyQuestions(id int) *[]Question {
+	db := GormConnect()
+
+	questionColumn := "questions.question_id, students.student_name, questions.question_title, questions.question_body, questions.create_at, students.student_profile_image, genres.genre_name"
+
+	db.Table("questions").
+		Select(questionColumn).
+		Joins("INNER JOIN students ON (questions.student_id = students.student_id)").
+		Joins("INNER JOIN genres ON questions.question_id = genres.question_id").
+		Where("questions.student_id = ?", id).
+		Find(&questions)
+
+	for i, question := range questions {
+		db.Model(&question).Where("question_id = ?", question.QuestionId).Find(&tags)
+		questions[i].Tags = tags
+	}
+
+	return &questions
+}
+
+func GetMyAnswers(id int) *[]Question {
+	db := GormConnect()
+
+	questionColumn := "questions.question_id, students.student_name, questions.question_title, questions.question_body, questions.create_at, students.student_profile_image, genres.genre_name"
+
+	db.Table("questions").
+		Select(questionColumn).
+		Joins("INNER JOIN students ON (questions.student_id = students.student_id)").
+		Joins("INNER JOIN genres ON questions.question_id = genres.question_id").
+		Joins("INNER JOIN answers ON (questions.question_id = answers.question_id)").
+		Where("answers.student_id = ?", id).
+		Find(&questions)
+
+	for i, question := range questions {
+		db.Model(&question).Where("question_id = ?", question.QuestionId).Find(&tags)
+		questions[i].Tags = tags
+	}
+
+	return &questions
+}

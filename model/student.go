@@ -38,7 +38,7 @@ func GetByStudentId(id int) *StudentProfile {
 	return &studentProfile
 }
 
-func CreateStudent(studentName string, studentGrade int, studentClass string, studentClassNumber int, studentLoginId string, studentLoginPassword string) bool {
+func CreateStudent(studentName, studentClass, studentLoginId, studentLoginPassword string, studentClassNumber, studentGrade int) bool {
 	db := GormConnect()
 	defer db.Close()
 
@@ -56,7 +56,7 @@ func CreateStudent(studentName string, studentGrade int, studentClass string, st
 	return true
 }
 
-func LoginStudent(loginId string, loginPassWord string) (*StudentProfile, string, bool) {
+func LoginStudent(loginId, loginPassWord string) (*StudentProfile, string, bool) {
 	db := GormConnect()
 
 	if not := db.Where("student_login_id = ? AND student_login_password = ?", loginId, loginPassWord).First(&student).Scan(&studentProfile).Error; not != nil {

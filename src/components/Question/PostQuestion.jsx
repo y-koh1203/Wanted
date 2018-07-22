@@ -39,9 +39,11 @@ export default class QuestionList extends React.Component{
     componentWillMount(){
         let jwt = localStorage.getItem('jwt');
         let student_id = localStorage.getItem('student_id');
+        let student_name = localStorage.getItem('student_name')
         this.setState({
-            student_id:student_id,
-            jwt:jwt,
+            student_id: student_id,
+            student_name: student_name,
+            jwt: jwt,
         });
 
     }
@@ -61,8 +63,8 @@ export default class QuestionList extends React.Component{
         this.setState({body:value});
     }
 
+    //質問の投稿処理
     handleClickSubmit(){
-
         let student_id = this.state.student_id;
         let jwt = this.state.jwt;
         let question_title = this.state.question_title;
@@ -73,56 +75,69 @@ export default class QuestionList extends React.Component{
 
         let params_keyword = new URLSearchParams();
         params_keyword.append('app_id',key);
-        params_keyword.append('title','test');
-        params_keyword.append('body','消費税しょうひぜいの影響えいきょうで、うちの商品しょうひんも値上ねあげせざるをえない状況じょうきょうです。');
-        params_keyword.append('max_num',20)
+        params_keyword.append('sentence',body);
+        params_keyword.append('max_num',5)
 
-        axios.post('https://labs.goo.ne.jp/api/keyword',params_keyword).then(
+        let words = [];
+
+        //形態素解析APIを使用して、帰ってきた値を整形する
+        axios.post('https://labs.goo.ne.jp/api/morph',params_keyword).then(
             (res)=>{
-                console.log(res);
+                let word_list = res.data.word_list;
+                for(let i = 0; i< word_list.length;i++){
+                    for(let j = 0;j < word_list[i].length;j++){
+                        if(word_list[i][j][1] === '名詞'){
+                            if(words.indexOf(word_list[i][j][0]) == -1){
+                                words.push(word_list[i][j][0]);
+                            }
+                        }
+                    }
+                }
             },
             ()=>{
                 console.log('fail');
             }
         )
 
+        console.log(words);
+
         //paramsにpostするデータを追加
-        // let params = new URLSearchParams();
-        // params.append('student_id',student_id);
-        // params.append('question_title',question_title);
-        // params.append('body',body);
-        // params.append('genre',genre);
-        // params.append('jwt',jwt);
+        let params = new URLSearchParams();
+        params.append('student_id',student_id);
+        params.append('question_title',question_title);
+        params.append('body',body);
+        params.append('genre',genre);
+        params.append('jwt',jwt);
+        params.append('tags',words);
 
-        // //Ajaxでのログイン処理
-        // axios.post('/question/post',params).then((res) => {
+        //Ajaxでのログイン処理
+        axios.post('/question/post',params).then(          
+            (r)=>{
+                console.log(r);
+            },
+
+            ()=>{
+                console.log(0);
+            }
+            //this.props.history.push('/user');
+        ).catch((err)=>{
+            //通信失敗時のコールバック
+            let msg;
+            if(err.response == undefined){
+                msg = '通信に失敗しました';
+            }else if(err.response.status == 404){
+                msg = '名前かパターンが違います';
+            }else{
+                msg = '500 ISE.';
+            }
+
+            this.setState({
+                open: true,
+                message: msg
+            });
             
-        //     (res)=>{
-        //         console.log(res);
-        //     },
-        //     ()=>{
-        //         console.log(0);
-        //     }
-
-        //     this.props.history.push('/user');
-        // }).catch((err)=>{
-        //     //通信失敗時のコールバック
-        //     let msg;
-        //     if(err.response == undefined){
-        //         msg = '通信に失敗しました';
-        //     }else if(err.response.status == 404){
-        //         msg = '名前かパターンが違います';
-        //     }else{
-        //         msg = '500 ISE.';
-        //     }
-
-        //     this.setState({
-        //         open: true,
-        //         message: msg
-        //     });
-            
-        //     return false;
-        // });
+            return false;
+        });
     }
 
     render(){
@@ -133,7 +148,6 @@ export default class QuestionList extends React.Component{
                 <TextField
                     id="title"
                     label="質問タイトル"
-                    value="質問タイトル"
                     onChange={this.handleTextChange.bind(this)}
                     margin="normal"
                 />

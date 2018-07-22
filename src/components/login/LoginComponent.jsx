@@ -108,7 +108,7 @@ class Login extends React.Component{
             }
 
             //各種情報をローカルストレージにセット
-            localStorage.setItem('studnet_id',res['data']['studentProfile']['student_id']);
+            localStorage.setItem('student_id',res['data']['studentProfile']['student_id']);
             localStorage.setItem('student_name', res['data']['studentProfile']['student_name']);
             localStorage.setItem('nickname', res['data']['studentProfile']['nickname']);
             localStorage.setItem('class', res['data']['studentProfile']['class']);

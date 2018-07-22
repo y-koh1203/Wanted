@@ -99,8 +99,6 @@ export default class QuestionList extends React.Component{
             }
         )
 
-        console.log(words);
-
         //paramsにpostするデータを追加
         let params = new URLSearchParams();
         params.append('student_id',student_id);
@@ -109,6 +107,9 @@ export default class QuestionList extends React.Component{
         params.append('genre',genre);
         params.append('jwt',jwt);
         params.append('tags',words);
+
+        console.log(student_id);
+        console.log(words);
 
         //Ajaxでのログイン処理
         axios.post('/question/post',params).then(          

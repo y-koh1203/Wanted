@@ -41,14 +41,28 @@ func LoginStudent(c *gin.Context) {
 	loginId := c.PostForm("login_id")
 	loginPassWord := c.PostForm("pattern")
 
-	studentProfile, token, nil := model.LoginStudent(loginId, loginPassWord)
+	c1 := make(chan []model.Question)
+	c2 := make(chan []model.Question)
 
+	studentProfile, token, nil := model.LoginStudent(loginId, loginPassWord)
 	if !nil {
 		c.JSON(http.StatusNotFound, nil)
 	}
 
-	myQuestion := model.GetMyQuestions(studentProfile.StudentId)
-	myAnswer := model.GetMyAnswers(studentProfile.StudentId)
+	go func() {
+		myQuestion := model.GetMyQuestions(studentProfile.StudentId)
+		c1 <- *myQuestion
+		close(c1)
+	}()
+
+	go func() {
+		myAnswer := model.GetMyAnswers(studentProfile.StudentId)
+		c2 <- *myAnswer
+		close(c2)
+	}()
+
+	myQuestion := <-c1
+	myAnswer := <-c2
 
 	c.JSON(http.StatusOK, gin.H{
 		"studentProfile": studentProfile,

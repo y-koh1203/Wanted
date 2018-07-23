@@ -15,6 +15,7 @@ import (
 func GetAllQuestion(c *gin.Context) {
 	fmt.Println(c.Query("jwt"))
 	jwtToken := c.Query("jwt")
+
 	_, err := jwt.Decode(jwtToken)
 	if err != nil {
 		c.JSON(http.StatusNotFound, nil)
@@ -27,7 +28,6 @@ func GetAllQuestion(c *gin.Context) {
 func GetQuestionDetail(c *gin.Context) {
 	n := c.Param("question_id")
 	id, _ := strconv.Atoi(n)
-
 	fmt.Println(id)
 
 	result := model.GetQuestionDetail(id)

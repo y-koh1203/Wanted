@@ -175,30 +175,23 @@ export default class UserProfile extends Component {
     handleTaughtQuestionAll(){
         let student_id = localStorage.getItem('student_id');
 
-        const promise = new Promise((resolve ,reject) => {
-            axios.get('/question/user/:student_id', {
-                params: {
-                  student_id: student_id
-                }
-            }).then(
-                (res) => {
-                    resolve(res);
-                },
+        axios.get('/question/user/:student_id', {
+            params: {
+            student_id: student_id
+            }
+        }).then(
+            (res) => {
+                resolve(res);
+            },
 
-                () => {
-                    reject();
-                }
-            );
-        });
-
-        promise.then(
-            (res)=>{
+            () => {
+                reject();
+            }
+        ).catch(
+            ()=>{
 
             }
-        ).catch(()=>{
-
-        });
-
+        );
     }
 
     //全ての聞いた質問を取得する
@@ -228,7 +221,6 @@ export default class UserProfile extends Component {
         ).catch(()=>{
 
         });
-
     }
 
     render() {
@@ -249,7 +241,7 @@ export default class UserProfile extends Component {
                             </div>
 
                             <div style={Object.assign({},...[styles.nameBox])}>
-                                <h1 style={Object.assign({},...[styles.text_h1,styles.fontLg])}>{localStorage.getItem("user_name")}</h1>
+                                <h1 style={Object.assign({},...[styles.text_h1,styles.fontLg])}>{localStorage.getItem("student_name")}</h1>
                                 <p style={Object.assign({},...[styles.centering,styles.fontMd,styles.nickname])}>{localStorage.getItem("nickname")}</p>
                                 <p style={Object.assign({},...[styles.centering,styles.fontMd,styles.classAndGrade])}>{localStorage.getItem("grade")}年　{localStorage.getItem("class")}組</p>
 

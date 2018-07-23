@@ -45,7 +45,6 @@ export default class QuestionList extends React.Component{
             student_name: student_name,
             jwt: jwt,
         });
-
     }
 
     handleSelectChange(e){
@@ -74,9 +73,9 @@ export default class QuestionList extends React.Component{
         let key = process.env.API_KEY;
 
         let params_keyword = new URLSearchParams();
-        params_keyword.append('app_id',key);
-        params_keyword.append('sentence',body);
-        params_keyword.append('max_num',5)
+        params_keyword.append('app_id', key);
+        params_keyword.append('sentence', body);
+        params_keyword.append('max_num', 5);
 
         let words = [];
 
@@ -100,29 +99,19 @@ export default class QuestionList extends React.Component{
         )
 
         //paramsにpostするデータを追加
-        // let params = new URLSearchParams();
-        // params.append('student_id',student_id);
-        // params.append('question_title',question_title);
-        // params.append('body',body);
-        // params.append('genre',genre);
-        // params.append('jwt',jwt);
-        // params.append('tags',words);
+        let params = new URLSearchParams();
+        params.append('student_id',student_id);
+        params.append('question_title',question_title);
+        params.append('body',body);
+        params.append('genre',genre);
+        params.append('jwt',jwt);
+        params.append('tags[]',words);
 
         console.log(student_id);
         console.log(words);
 
         //Ajaxでのログイン処理
-        axios.get('/question/post',
-        {
-            params:{
-                student_id:student_id,
-                question_title:question_title,
-                body:body,
-                genre:genre,
-                jwt:jwt,
-                tags:tags
-            }
-        }).then(          
+        axios.post('/question/post',params).then(          
             (r)=>{
                 console.log(r);
             },

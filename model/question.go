@@ -47,11 +47,14 @@ func GetAllQuestion() *[]Question {
 		questions[i].Tags = tags
 	}
 
+	db.Close()
 	return &questions
 }
 
 func GetQuestionDetail(id int) *Question {
 	db := GormConnect()
+	c1 := make(chan []Tag)
+	c2 := make(chan []Answer)
 
 	questionColumn := "questions.question_id, students.student_name, questions.question_title, questions.question_body, questions.create_at, students.student_profile_image, genres.genre_name"
 	answerColumn := "answers.answer_id,answers.answer_body,answers.answer_like,answers.create_at,students.student_name"
@@ -63,15 +66,28 @@ func GetQuestionDetail(id int) *Question {
 		Where("questions.question_id = ?", id).
 		Find(&question)
 
-	db.Model(&question).Where("question_id = ?", question.QuestionId).Find(&tags)
-	db.Model(&question).Table("answers").Select(answerColumn).
-		Joins("INNER JOIN students ON (answers.student_id = students.student_id)").
-		Where("question_id = ?", question.QuestionId).
-		Find(&answers)
+	go func() {
+		db.Model(&question).Where("question_id = ?", question.QuestionId).Find(&tags)
+		c1 <- tags
+		close(c1)
+	}()
+
+	go func() {
+		db.Model(&question).Table("answers").Select(answerColumn).
+			Joins("INNER JOIN students ON (answers.student_id = students.student_id)").
+			Where("question_id = ?", question.QuestionId).
+			Find(&answers)
+		c2 <- answers
+		close(c2)
+	}()
+
+	tags := <-c1
+	answers := <-c2
 
 	question.Tags = tags
 	question.Answer = answers
 
+	db.Close()
 	return &question
 }
 
@@ -92,6 +108,7 @@ func GetMyQuestions(id int) *[]Question {
 		questions[i].Tags = tags
 	}
 
+	db.Close()
 	return &questions
 }
 
@@ -113,5 +130,6 @@ func GetMyAnswers(id int) *[]Question {
 		questions[i].Tags = tags
 	}
 
+	db.Close()
 	return &questions
 }

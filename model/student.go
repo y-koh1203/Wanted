@@ -33,14 +33,15 @@ var studentProfile StudentProfile
 func GetByStudentId(id int) *StudentProfile {
 	db := GormConnect()
 
-	db.Raw("SELECT student_id, student_name, student_grade, student_class, student_nick_name, student_profile_image FROM students WHERE student_id = ?", id).Scan(&studentProfile)
+	db.Raw("SELECT student_id, student_name, student_grade, student_class, student_nick_name, student_profile_image FROM students WHERE student_id = ?", id).
+		Scan(&studentProfile)
+
 	db.Close()
 	return &studentProfile
 }
 
 func CreateStudent(studentName, studentClass, studentLoginId, studentLoginPassword string, studentClassNumber, studentGrade int) bool {
 	db := GormConnect()
-	defer db.Close()
 
 	student.StudentName = studentName
 	student.StudentGrade = studentGrade

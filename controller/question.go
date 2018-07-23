@@ -15,6 +15,7 @@ import (
 func GetAllQuestion(c *gin.Context) {
 	fmt.Println(c.Query("jwt"))
 	jwtToken := c.Query("jwt")
+
 	_, err := jwt.Decode(jwtToken)
 	if err != nil {
 		c.JSON(http.StatusNotFound, nil)
@@ -27,7 +28,6 @@ func GetAllQuestion(c *gin.Context) {
 func GetQuestionDetail(c *gin.Context) {
 	n := c.Param("question_id")
 	id, _ := strconv.Atoi(n)
-
 	fmt.Println(id)
 
 	result := model.GetQuestionDetail(id)
@@ -35,18 +35,18 @@ func GetQuestionDetail(c *gin.Context) {
 }
 
 func PostQuestion(c *gin.Context) {
-	studentId := c.Query("student_id")
-	questionTitle := c.Query("question_title")
-	questionBody := c.Query("body")
-	questionGenre := c.PostFormArray("genre")
+	n := c.PostForm("student_id")
+	id, _ := strconv.Atoi(n)
+	questionTitle := c.PostForm("question_title")
+	questionBody := c.PostForm("body")
+	questionGenre := c.PostForm("genre")
+	questionTags := c.PostFormArray("tags")
 
-	fmt.Println(c.PostFormArray("tags"))
-
-	jwtToken := c.Query("jwt")
+	jwtToken := c.PostForm("jwt")
 	_, err := jwt.Decode(jwtToken)
 	if err != nil {
 		c.JSON(http.StatusNotFound, nil)
 	}
 
-	fmt.Println(studentId, questionTitle, questionBody, questionGenre, jwtToken)
+	fmt.Println(id, questionTitle, questionBody, questionGenre, questionTags, jwtToken)
 }

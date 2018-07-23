@@ -71,7 +71,6 @@ func GetQuestionDetail(id int) *Question {
 		c1 <- tags
 		close(c1)
 	}()
-	tags := <-c1
 
 	go func() {
 		db.Model(&question).Table("answers").Select(answerColumn).
@@ -81,6 +80,8 @@ func GetQuestionDetail(id int) *Question {
 		c2 <- answers
 		close(c2)
 	}()
+
+	tags := <-c1
 	answers := <-c2
 
 	question.Tags = tags

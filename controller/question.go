@@ -18,7 +18,7 @@ func GetAllQuestion(c *gin.Context) {
 
 	_, err := jwt.Decode(jwtToken)
 	if err != nil {
-		c.JSON(http.StatusNotFound, nil)
+		c.JSON(http.StatusForbidden, nil)
 	}
 
 	result := model.GetAllQuestion()
@@ -26,17 +26,14 @@ func GetAllQuestion(c *gin.Context) {
 }
 
 func GetQuestionDetail(c *gin.Context) {
-	n := c.Param("question_id")
-	id, _ := strconv.Atoi(n)
-	fmt.Println(id)
+	id, _ := strconv.Atoi(c.Param("question_id"))
 
 	result := model.GetQuestionDetail(id)
 	c.JSON(http.StatusOK, result)
 }
 
 func PostQuestion(c *gin.Context) {
-	n := c.PostForm("student_id")
-	id, _ := strconv.Atoi(n)
+	id, _ := strconv.Atoi(c.PostForm("student_id"))
 	questionTitle := c.PostForm("question_title")
 	questionBody := c.PostForm("body")
 	questionGenre := c.PostForm("genre")
@@ -45,7 +42,7 @@ func PostQuestion(c *gin.Context) {
 	jwtToken := c.PostForm("jwt")
 	_, err := jwt.Decode(jwtToken)
 	if err != nil {
-		c.JSON(http.StatusNotFound, nil)
+		c.JSON(http.StatusForbidden, nil)
 	}
 
 	fmt.Println(id, questionTitle, questionBody, questionGenre, questionTags, jwtToken)

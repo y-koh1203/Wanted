@@ -3,15 +3,14 @@ import axios from 'axios';
 import { withRouter } from 'react-router';
 import Snackbar from 'material-ui/Snackbar';
 import TextField from '@material-ui/core/TextField';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Button from '@material-ui/core/Button';
-import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Divider from '@material-ui/core/Divider';
+import HeaderMenu from '../header/HeaderComponet'
+import ModalWindow from '../parts/modal';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 const styles = {
     container: { 
@@ -22,23 +21,48 @@ const styles = {
     },
 
     searchContetBox: {
-        padding: '10% 0'
+        padding: '5% 0'
+    },
+
+    selectSize: {
+        width: '30vw',
+        marginLeft: '3.5vw'
+    },
+
+    titleSize: {
+        width: '50vw',
+        marginLeft: '5vw'
+    },
+
+    bodySize: {
+        width: '50vw',
+        marginLeft: '5vw'
+    },
+
+    centering: { 
+        textAlign: 'center',
     }
 }
 
 export default class QuestionList extends React.Component{
 
-    state = {
-        open: false,
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false,
+            message: '',
+    
+            student_id:'',
+            question_title: '',
+            genre: '',
+            body: '',
+            jwt: '',
+    
+            select:'',
+        };
 
-        student_id:'',
-        title: '',
-        genre: '',
-        body: '',
-        jwt: '',
-
-        select:'',
-    };
+        this.handleRequestClose = this.handleRequestClose.bind(this);
+    }
 
     //マウント時にLocalStorageから必要な情報を取得する
     componentWillMount(){
@@ -79,6 +103,33 @@ export default class QuestionList extends React.Component{
         body = body.replace(/\r?\n/g, '');
         let genre = this.state.genre;
 
+        if(question_title == ''){
+            this.setState({
+                open: true,
+                message: 'タイトルが未入力です'
+            });
+
+            return false;
+        }
+
+        if(genre == ''){
+            this.setState({
+                open: true,
+                message: '授業を選択してください'
+            });
+
+            return false;
+        }
+
+        if(body == ''){
+            this.setState({
+                open: true,
+                message: '質問本文が未入力です'
+            });
+
+            return false;
+        }
+        
         //paramsにpostするデータを追加
         let params = new URLSearchParams();
         params.append('student_id',student_id);
@@ -90,11 +141,22 @@ export default class QuestionList extends React.Component{
         //Ajaxでのpost処理
         axios.post('/question/post',params).then(          
             (r)=>{
-                console.log(r);
+                if(r.response.status === 200){
+
+                }
             },
 
-            ()=>{
+            (r)=>{
                 console.log(0);
+                if(r.response.status === 400){
+                    this.setState({
+                        open: true,
+                        message: '投稿に失敗しました。'
+                    });
+
+                    return false;
+                }
+
             }
             //this.props.history.push('/user');
         ).catch((err)=>{
@@ -118,70 +180,98 @@ export default class QuestionList extends React.Component{
         });
     }
 
+    handleRequestClose(){
+        this.setState({
+          open: false,
+        });
+    }
+
     render(){
 
         return(
-            <div>
-                <p>投稿者:{this.state.student_name}</p>
-                <div style={Object.assign({},...[styles.searchContetBox])}>
-                    <TextField
-                        id="title"
-                        label="質問タイトル"
-                        onChange={this.handleTextChange.bind(this)}
-                        margin="normal"
-                    />
+            <MuiThemeProvider>
+                <div>
+                    <div>
+                        <HeaderMenu headerName="しつもんする" />
+                    </div>
+
+                    <div style={Object.assign({},...[styles.searchContetBox])}>
+                        <InputLabel htmlFor="age-simple">なまえ</InputLabel>
+                        <p style={styles.titleSize}>{this.state.student_name}</p>
+                    </div>
+
+                    <Divider />
+
+                    <div style={Object.assign({},...[styles.searchContetBox])}>
+                        <InputLabel htmlFor="age-simple">たいとる</InputLabel>
+                        <TextField
+                            id="title"
+                            label="質問タイトル"
+                            onChange={this.handleTextChange.bind(this)}
+                            margin="normal"
+                            style={styles.titleSize}
+                        />
+                    </div>
+            
+                    <Divider />
+
+                    <div style={Object.assign({},...[styles.searchContetBox])}>
+                        <InputLabel htmlFor="age-simple">じゅぎょう</InputLabel>
+                        <Select
+                            value={this.state.genre}
+                            onChange={this.handleSelectChange.bind(this)}
+                            style={Object.assign({},...[styles.selectSize])}
+                        >
+                            <MenuItem value="">
+                                <em>None</em>
+                            </MenuItem>
+                            <MenuItem value={1}>国語</MenuItem>
+                            <MenuItem value={2}>算数</MenuItem>
+                            <MenuItem value={3}>理科</MenuItem>
+                            <MenuItem value={4}>社会</MenuItem>
+                            <MenuItem value={5}>英語</MenuItem>
+                            <MenuItem value={6}>体育</MenuItem>
+                            <MenuItem value={7}>音楽</MenuItem>
+                            <MenuItem value={8}>家庭科</MenuItem>
+                        </Select>
+                    </div>
+
+                    <Divider />
+
+                    <div style={Object.assign({},...[styles.searchContetBox])}>
+                        <InputLabel htmlFor="age-simple">きくこと</InputLabel>
+                        <TextField
+                            id="body"
+                            label=""
+                            multiline
+                            rows="4"
+                            margin="normal"
+                            onChange={this.handleBodyTextChange.bind(this)}
+                            style={styles.bodySize}
+                        />
+                    </div>
+        
+                    <Divider />
+
+                    <div style={Object.assign({},...[styles.searchContetBox,styles.centering])}>
+                        <Button 
+                            variant="outlined"
+                            onClick={this.handleClickSubmit.bind(this)}
+                        >
+                            投稿する
+                        </Button>
+                    </div>   
+                    <div>
+                        <ModalWindow />
+                    </div>    
+                    <Snackbar
+                        open={this.state.open}
+                        message={this.state.message}
+                        autoHideDuration={3000}
+                        onRequestClose={this.handleRequestClose}
+                    />     
                 </div>
-           
-                <Divider />
-
-                <div style={Object.assign({},...[styles.searchContetBox])}>
-                    <InputLabel htmlFor="age-simple">科目</InputLabel>
-                    <Select
-                        value={this.state.genre}
-                        onChange={this.handleSelectChange.bind(this)}
-                        // inputProps={{
-                        //     name: 'class',
-                        //     id: 'age-simple',
-                        // }}
-                    >
-                        <MenuItem value="">
-                            <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={1}>国語</MenuItem>
-                        <MenuItem value={2}>算数</MenuItem>
-                        <MenuItem value={3}>理科</MenuItem>
-                        <MenuItem value={4}>社会</MenuItem>
-                        <MenuItem value={5}>英語</MenuItem>
-                        <MenuItem value={6}>体育</MenuItem>
-                        <MenuItem value={7}>音楽</MenuItem>
-                        <MenuItem value={8}>家庭科</MenuItem>
-                    </Select>
-                </div>
-
-                 <Divider />
-
-                <div style={Object.assign({},...[styles.searchContetBox])}>
-                    <TextField
-                        id="body"
-                        label="質問本文"
-                        multiline
-                        rows="4"
-                        margin="normal"
-                        onChange={this.handleBodyTextChange.bind(this)}
-                    />
-                </div>
-    
-                <Divider />
-
-                <div style={Object.assign({},...[styles.searchContetBox])}>
-                    <Button 
-                        variant="outlined"
-                        onClick={this.handleClickSubmit.bind(this)}
-                    >
-                        投稿する
-                    </Button>
-                </div>    
-            </div>
+            </MuiThemeProvider>
         )
     }
 }

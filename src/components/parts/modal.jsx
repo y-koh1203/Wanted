@@ -79,7 +79,10 @@ class ModalWindow extends React.Component {
     this.setState({modalIsOpen: true});
   }
 
-  onClickLogout(){}
+  onClickLogout(){
+    localStorage.setItem('jwt',null);
+    this.props.history.push('/');
+  }
 
   // onClickPostQuestion(){
   //   this.props.history.push('question/post');
@@ -139,7 +142,7 @@ class ModalWindow extends React.Component {
                   onClick={this.closeModal}
                   color="primary"
               >
-                <Link to="/"><PersonIcon style={Object.assign({},...[styles.buttonIcons])} /></Link>
+                <Link to="/user"><PersonIcon style={Object.assign({},...[styles.buttonIcons])} /></Link>
               </Button>
               <p style={Object.assign({},...[styles.centering])}>プロフィール</p>
             </div>
@@ -158,9 +161,10 @@ class ModalWindow extends React.Component {
             <div style={Object.assign({},...[styles.buttonWrap,styles.centering])}>
               <Button 
                   variant="outlined"
-                  onClick={this.closeModal}
+                  //onClick={this.closeModal}
+                  onClick={this.onClickLogout}
               >
-                  <Link to="/"><ExitToApp style={Object.assign({},...[styles.buttonIcons])} /></Link>
+                  {/* <Link to="/"> */}<ExitToApp style={Object.assign({},...[styles.buttonIcons])} />{/* </Link> */}
               </Button>
               <p style={Object.assign({},...[styles.centering])}>ログアウト</p>
             </div>

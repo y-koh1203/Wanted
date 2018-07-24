@@ -4,6 +4,7 @@
 CREATE TABLE `questions` (
   `question_id` INT(5) NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '質問ID',
   `student_id`  INT(4) NOT NULL COMMENT '生徒ID',
+  `genre_id` INT(2) NOT NULL  COMMENT 'ジャンルID',
   `question_title` VARCHAR(50) NOT NULL COMMENT '質問タイトル',
   `question_body` VARCHAR (200) NOT NULL COMMENT '質問内容',
   `delete_flg` INT(1) NOT NULL DEFAULT 0 COMMENT '削除フラグ',

@@ -76,6 +76,7 @@ export default class QuestionList extends React.Component{
         let jwt = this.state.jwt;
         let question_title = this.state.question_title;
         let body = this.state.body;
+        body = body.replace(/\r?\n/g, '');
         let genre = this.state.genre;
 
         //paramsにpostするデータを追加

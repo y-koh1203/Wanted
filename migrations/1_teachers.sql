@@ -12,6 +12,8 @@ CREATE TABLE `teachers` (
   `update_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日'
 );
 
+INSERT INTO `teachers`(`teacher_name`, `teacher_grade_homeroom`, `teacher_homeroom`, `teacher_password`) VALUES ("山田忠明",3,"A","abcd1234");
+
 -- +migrate Down
 -- SQL section 'Down' is executed when this migration is rolled back
 DROP TABLE `teachers`;

@@ -39,5 +39,11 @@ func PostQuestion(c *gin.Context) {
 	fmt.Printf("student_id: %d; question_title: %s; body: %s; genre: %d; jwtToken: %s; analysis: %s;", studentId, questionTitle, questionBody, questionGenre, jwtToken)
 	fmt.Println("")
 
-	model.CreateQuestion(questionTitle, questionBody, jwtToken, studentId, questionGenre)
+	questionId, err := model.CreateQuestion(questionTitle, questionBody, jwtToken, studentId, questionGenre)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "入力が正しくない"})
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"questionId": questionId,
+	})
 }

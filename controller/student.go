@@ -19,21 +19,19 @@ func GetByStudentId(c *gin.Context) {
 
 func PostStudent(c *gin.Context) {
 	studentName := c.PostForm("student_name")
-	studentGrade := c.PostForm("student_grade")
+	studentGrade, _ := strconv.Atoi(c.PostForm("student_grade"))
 	studentClass := c.PostForm("student_class")
 	studentClassNumber := c.PostForm("student_class_number")
 	studentLoginPassword := c.PostForm("student_login_password")
 	studentLoginId := studentClass + studentClassNumber
-
-	intStudentGrade, _ := strconv.Atoi(studentGrade)
 	intStudentClassNumber, _ := strconv.Atoi(studentClassNumber)
 
-	post := model.CreateStudent(studentName, studentClass, studentLoginId, studentLoginPassword, intStudentClassNumber, intStudentGrade)
+	post := model.CreateStudent(studentName, studentClass, studentLoginId, studentLoginPassword, intStudentClassNumber, studentGrade)
 	if !post {
 		fmt.Println("作成失敗")
 	}
 
-	fmt.Println(studentName, intStudentGrade, studentClass, intStudentClassNumber, studentLoginId, studentLoginPassword)
+	fmt.Println(studentName, studentClassNumber, studentClass, studentClassNumber, studentLoginId, studentLoginPassword)
 	c.HTML(http.StatusOK, "add_student.html", nil)
 }
 
@@ -41,33 +39,23 @@ func LoginStudent(c *gin.Context) {
 	loginId := c.PostForm("login_id")
 	loginPassWord := c.PostForm("pattern")
 
-	c1 := make(chan []model.Question)
-	c2 := make(chan []model.Question)
+	studentProfile, token, ok := model.LoginStudent(loginId, loginPassWord)
+	if !ok {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "IDまたはパスワードが正しくない"})
+	} else {
 
-	studentProfile, token, nil := model.LoginStudent(loginId, loginPassWord)
-	if !nil {
-		c.JSON(http.StatusNotFound, nil)
+		myQuestion := *model.GetMyQuestions(studentProfile.StudentId)
+		myAnswer := *model.GetMyAnswers(studentProfile.StudentId)
+
+		fmt.Println(studentProfile)
+		fmt.Println(myQuestion)
+		fmt.Println(myAnswer)
+		fmt.Println(token)
+		c.JSON(http.StatusOK, gin.H{
+			"studentProfile": studentProfile,
+			"myQuestion":     myQuestion,
+			"myAnswer":       myAnswer,
+			"jwtToken":       token,
+		})
 	}
-
-	go func() {
-		myQuestion := model.GetMyQuestions(studentProfile.StudentId)
-		c1 <- *myQuestion
-		close(c1)
-	}()
-
-	go func() {
-		myAnswer := model.GetMyAnswers(studentProfile.StudentId)
-		c2 <- *myAnswer
-		close(c2)
-	}()
-
-	myQuestion := <-c1
-	myAnswer := <-c2
-
-	c.JSON(http.StatusOK, gin.H{
-		"studentProfile": studentProfile,
-		"myQuestion":     myQuestion,
-		"myAnswer":       myAnswer,
-		"jwtToken":       token,
-	})
 }

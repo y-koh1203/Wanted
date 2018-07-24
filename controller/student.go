@@ -29,10 +29,10 @@ func PostStudent(c *gin.Context) {
 	post := model.CreateStudent(studentName, studentClass, studentLoginId, studentLoginPassword, intStudentClassNumber, studentGrade)
 	if !post {
 		fmt.Println("作成失敗")
+	} else {
+		fmt.Println(studentName, studentClassNumber, studentClass, studentClassNumber, studentLoginId, studentLoginPassword)
+		c.HTML(http.StatusOK, "add_student.html", nil)
 	}
-
-	fmt.Println(studentName, studentClassNumber, studentClass, studentClassNumber, studentLoginId, studentLoginPassword)
-	c.HTML(http.StatusOK, "add_student.html", nil)
 }
 
 func LoginStudent(c *gin.Context) {

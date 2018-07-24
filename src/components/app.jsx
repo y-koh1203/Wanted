@@ -4,9 +4,9 @@ import Login from './login/LoginComponent';
 import UserProfile from './user/UserComponent';
 import QuestionDetail from './Question/QuestionDetail';
 import PostQuestion from './Question/PostQuestion';
+import AllQuestions from './Question/AllQuestion'
 
 import { render } from 'react-dom'
-
 
 const App = () => (
     <BrowserRouter>
@@ -17,8 +17,8 @@ const App = () => (
             <Route exact path='/user' component={UserProfile} />
             <Route exact path='/question/detail' component={QuestionDetail} />
             <Route exact path='/question/post' component={PostQuestion} />
-            {/* <Route exact path='/question/all' component={Questions} />
-            <Route exact path='/question/detail/:question_id' component={Questions} /> */}
+            <Route exact path='/question/all' component={AllQuestions} />
+            {/* <Route exact path='/question/detail/:question_id' component={Questions} /> */}
         </div>
     </BrowserRouter>
 )

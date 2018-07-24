@@ -43,6 +43,7 @@ class QuestionList extends React.Component{
                             component="a"
                             href="#chip"
                             clickable
+                            key={t}
                         />
                     );
                 }

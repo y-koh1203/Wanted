@@ -296,7 +296,9 @@ export default class UserProfile extends Component {
                         </div>
                     </div>
                 </div>
-                <ModalWindow />
+                <div>
+                    <ModalWindow />
+                </div>        
             </div>
         );
     }

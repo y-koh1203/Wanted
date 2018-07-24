@@ -17,7 +17,7 @@ const customStyles = {
     left                  : 'auto',
     right                 : 'auto',
     bottom                : 'auto',
-    width                 : '80vw',
+    width                 : '90vw',
     marginLeft            : '50%',
     transform             : 'translate(-50%, -50%)',
     zIndex                : '100',
@@ -34,13 +34,24 @@ const menuButtonStyles = {
 }
 
 const styles = {
+  headText: { 
+    color: '#000000',
+    fontWeight: 100,
+  },
+
   buttonWrap:{
-    width: '20%',
+    width: '20vw',
+    height: 'auto',
+  },
+
+  centering: { 
+    textAlign: 'center',
   },
 
   buttonIcons:{
-    width: '80%',
-    height: 'auto'
+    width: '100%',
+    height: 'auto',
+    maxWidth: '100px'
   },
 
   flex: {
@@ -76,7 +87,7 @@ class ModalWindow extends React.Component {
 
   afterOpenModal() {
     // references are now sync'd and can be accessed.
-    this.subtitle.style.color = '#f00';
+    this.subtitle.style.color = '#0000000';
   }
 
   closeModal() {
@@ -102,39 +113,66 @@ class ModalWindow extends React.Component {
           onRequestClose={this.closeModal}
           style={customStyles}
           contentLabel="Example Modal"
+          ariaHideApp={false}
         >
 
-          <h2 ref={subtitle => this.subtitle = subtitle}>メニュー</h2>
-          <button onClick={this.closeModal}>close</button>
+          <h2 
+            ref={subtitle => this.subtitle = subtitle}
+            style={Object.assign({},...[styles.centering,styles.headText])}
+          >
+            メニュー
+          </h2>
           <div style={styles.flex}>
-            <div style={Object.assign({},...[styles.buttonWrap])}>
-              <button>
+            <div style={Object.assign({},...[styles.buttonWrap,styles.centering])}>
+              <Button 
+                  variant="outlined"
+                  onClick={this.closeModal}
+              >
                 <Link to="/"><Home style={Object.assign({},...[styles.buttonIcons])}/></Link>
-              </button>
-              <p>ホーム</p>
+              </Button>
+              <p style={Object.assign({},...[styles.centering])}>ホーム</p>
             </div>
 
-            <div style={Object.assign({},...[styles.buttonWrap])}>
-              <button>
+            <div style={Object.assign({},...[styles.buttonWrap,styles.centering])}>
+              <Button 
+                  variant="outlined"
+                  onClick={this.closeModal}
+                  color="primary"
+              >
                 <Link to="/"><PersonIcon style={Object.assign({},...[styles.buttonIcons])} /></Link>
-              </button>
-              <p>プロフィール</p>
+              </Button>
+              <p style={Object.assign({},...[styles.centering])}>プロフィール</p>
             </div>
 
-            <div style={Object.assign({},...[styles.buttonWrap])}>
-              <button>
+            <div style={Object.assign({},...[styles.buttonWrap,styles.centering])}>
+              <Button 
+                  variant="outlined"
+                  onClick={this.closeModal}
+                  color="primary"
+              >
                 <Link to="/question/post"><QuestionAnswer style={Object.assign({},...[styles.buttonIcons])} /></Link>
-              </button>
-              <p>質問</p>
+              </Button>
+              <p style={Object.assign({},...[styles.centering])}>質問</p>
             </div>
 
-            <div style={Object.assign({},...[styles.buttonWrap])}>
-              <button>
-                <Link to="/"><ExitToApp style={Object.assign({},...[styles.buttonIcons])} /></Link>
-              </button>    
-              <p>ログアウト</p>
+            <div style={Object.assign({},...[styles.buttonWrap,styles.centering])}>
+              <Button 
+                  variant="outlined"
+                  onClick={this.closeModal}
+              >
+                  <Link to="/"><ExitToApp style={Object.assign({},...[styles.buttonIcons])} /></Link>
+              </Button>
+              <p style={Object.assign({},...[styles.centering])}>ログアウト</p>
             </div>
-          
+
+          </div>
+          <div　style={Object.assign({},...[styles.centering])}>
+            <Button 
+                variant="outlined"
+                onClick={this.closeModal}
+            >
+                閉じる
+            </Button>
           </div>
         </Modal>
       </div>

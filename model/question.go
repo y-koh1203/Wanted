@@ -43,7 +43,6 @@ type Answer struct {
 
 var questions []ResultQuestion
 var question1 ResultQuestion
-var question Question
 var answers []Answer
 var tags []Tag
 var tag Tag
@@ -152,28 +151,36 @@ func GetMyAnswers(id int) *[]ResultQuestion {
 	return &questions
 }
 
-func CreateQuestion(questionTitle, questionBody, jwtToken string, studentId, questionGenre int) bool {
+func CreateQuestion(questionTitle, questionBody, jwtToken string, studentId, questionGenre int) (int, error) {
 	mutex := new(sync.Mutex)
 	mutex.Lock()
 	db := GormConnect()
 
+	question := Question{}
 	question.StudentId = studentId
 	question.GenreId = questionGenre
 	question.QuestionTitle = questionTitle
 	question.QuestionBody = questionBody
-	db.Create(&question).Last(&question)
 
-	fmt.Println(question.QuestionId)
+	if err := db.Create(&question).Error; err != nil {
+		return 0, err
+	} else {
+		db.Raw("SELECT question_id FROM questions ORDER BY question_id DESC").First(&question)
 
-	tags := analysis.MorphologicalAnalysis(questionBody)
-	for _, val := range tags {
-		tag.TagName = val
-		tag.QuestionId = question.QuestionId
-		db.Create(&tag)
+		done := make(chan struct{}, 0)
+		tags := analysis.MorphologicalAnalysis(questionBody)
+		for _, val := range tags {
+			go func() {
+				tag.TagName = val
+				tag.QuestionId = question.QuestionId
+				db.Create(&tag)
+				defer close(done)
+			}()
+		}
+
+		<-done
+		db.Close()
+		mutex.Unlock()
+		return question.QuestionId, err
 	}
-
-	db.Close()
-	mutex.Unlock()
-
-	return true
 }

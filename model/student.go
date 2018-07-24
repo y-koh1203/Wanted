@@ -49,8 +49,6 @@ func CreateStudent(studentName, studentClass, studentLoginId, studentLoginPasswo
 	student.StudentClassNumber = studentClassNumber
 	student.StudentLoginId = studentLoginId
 	student.StudentLoginPassword = studentLoginPassword
-	student.StudentNickName = "名無し"
-	student.StudentProfileImage = "default.png"
 
 	db.Create(&student)
 	db.Close()

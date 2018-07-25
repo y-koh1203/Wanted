@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/wanted/env"
 )
 
 type Api struct {
@@ -16,7 +18,7 @@ type Api struct {
 }
 
 func MorphologicalAnalysis(body string) []string {
-	jsonStr := `{"app_id":"70111c53c0235ff7bb9b0d5f97e4b79ce0b4c74435a41fa5ae1586b7e4b77ed5","sentence":"` + body + `","info_filter":"form","pos_filter":"名詞"}`
+	jsonStr := `{"app_id":"` + env.KeywordAPIAppID + `","sentence":"` + body + `","info_filter":"form","pos_filter":"名詞"}`
 
 	req, err := http.NewRequest(
 		"POST",

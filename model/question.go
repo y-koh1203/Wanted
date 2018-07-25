@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com/makki0205/gojwt"
 	"github.com/wanted/analysis"
 )
 
@@ -154,7 +155,7 @@ func GetMyAnswers(id int) *[]ResultQuestion {
 func CreateQuestion(questionTitle, questionBody, jwtToken string, studentId, questionGenre int) (int, error) {
 	mutex := new(sync.Mutex)
 	mutex.Lock()
-	db := GormConnect()
+	defer mutex.Unlock()
 
 	question := Question{}
 	question.StudentId = studentId
@@ -162,25 +163,25 @@ func CreateQuestion(questionTitle, questionBody, jwtToken string, studentId, que
 	question.QuestionTitle = questionTitle
 	question.QuestionBody = questionBody
 
-	if err := db.Create(&question).Error; err != nil {
+	_, err := jwt.Decode(jwtToken)
+	if err != nil {
 		return 0, err
 	} else {
-		db.Raw("SELECT question_id FROM questions ORDER BY question_id DESC").First(&question)
+		db := GormConnect()
+		if err := db.Create(&question).Error; err != nil {
+			return 0, err
+		} else {
+			db.Raw("SELECT question_id FROM questions ORDER BY question_id DESC").First(&question)
 
-		done := make(chan struct{}, 0)
-		tags := analysis.MorphologicalAnalysis(questionBody)
-		for _, val := range tags {
-			go func() {
-				tag.TagName = val
+			tags := analysis.MorphologicalAnalysis(questionBody)
+			for _, item := range tags {
+				tag.TagName = item
 				tag.QuestionId = question.QuestionId
 				db.Create(&tag)
-				defer close(done)
-			}()
-		}
+			}
 
-		<-done
-		db.Close()
-		mutex.Unlock()
-		return question.QuestionId, err
+			db.Close()
+			return question.QuestionId, err
+		}
 	}
 }

@@ -28,7 +28,7 @@ func PostStudent(c *gin.Context) {
 
 	post := model.CreateStudent(studentName, studentClass, studentLoginId, studentLoginPassword, intStudentClassNumber, studentGrade)
 	if !post {
-		fmt.Println("作成失敗")
+		c.JSON(http.StatusBadRequest, gin.H{"message": "入力内容が正しくない"})
 	} else {
 		fmt.Println(studentName, studentClassNumber, studentClass, studentClassNumber, studentLoginId, studentLoginPassword)
 		c.HTML(http.StatusOK, "add_student.html", nil)
@@ -41,16 +41,12 @@ func LoginStudent(c *gin.Context) {
 
 	studentProfile, token, ok := model.LoginStudent(loginId, loginPassWord)
 	if !ok {
-		c.JSON(http.StatusBadRequest, gin.H{"message": "IDまたはパスワードが正しくない"})
+		c.JSON(http.StatusBadRequest, gin.H{"message": "入力内容が正しくない"})
 	} else {
 
 		myQuestion := *model.GetMyQuestions(studentProfile.StudentId)
 		myAnswer := *model.GetMyAnswers(studentProfile.StudentId)
 
-		fmt.Println(studentProfile)
-		fmt.Println(myQuestion)
-		fmt.Println(myAnswer)
-		fmt.Println(token)
 		c.JSON(http.StatusOK, gin.H{
 			"studentProfile": studentProfile,
 			"myQuestion":     myQuestion,

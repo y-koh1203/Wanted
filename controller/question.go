@@ -36,7 +36,7 @@ func PostQuestion(c *gin.Context) {
 	fmt.Println(questionGenre)
 	jwtToken := c.PostForm("jwt")
 
-	fmt.Printf("student_id: %d; question_title: %s; body: %s; genre: %d; jwtToken: %s; analysis: %s;", studentId, questionTitle, questionBody, questionGenre, jwtToken)
+	fmt.Printf("student_id: %d; question_title: %s; body: %s; genre: %d; jwtToken: %s;", studentId, questionTitle, questionBody, questionGenre, jwtToken)
 	fmt.Println("")
 
 	questionId, err := model.CreateQuestion(questionTitle, questionBody, jwtToken, studentId, questionGenre)

@@ -44,7 +44,7 @@ const styles = {
     }
 }
 
-export default class QuestionList extends React.Component{
+class PostQuestion extends React.Component{
 
     constructor(props) {
         super(props);
@@ -142,7 +142,9 @@ export default class QuestionList extends React.Component{
         axios.post('/question/post',params).then(          
             (r)=>{
                 if(r.response.status === 200){
-
+                    let question_id = res.questionId;
+                    localStorage.setItem('question_id',question_id);
+                    this.props.history.push('/question/detail');
                 }
             },
 
@@ -156,28 +158,27 @@ export default class QuestionList extends React.Component{
 
                     return false;
                 }
-
             }
             //this.props.history.push('/user');
-        ).catch((err)=>{
-            //通信失敗時のコールバック
-            let msg;
-            if(err.response == undefined){
-                msg = '通信に失敗しました';
-            }else if(err.response.status == 404){
-                msg = '名前かパターンが違います';
-            }else{
-                msg = '500 ISE.';
-            }
+        )//.catch((err)=>{
+        //     //通信失敗時のコールバック
+        //     let msg;
+        //     if(err.response == undefined){
+        //         msg = '通信に失敗しました';
+        //     }else if(err.response.status == 404){
+        //         msg = '名前かパターンが違います';
+        //     }else{
+        //         msg = '500 ISE.';
+        //     }
 
-            // 投稿失敗時のスナックバーのコントロール
-            this.setState({
-                open: true,
-                message: msg
-            });
+        //     // 投稿失敗時のスナックバーのコントロール
+        //     this.setState({
+        //         open: true,
+        //         message: msg
+        //     });
             
-            return false;
-        });
+        //     return false;
+        // });
     }
 
     handleRequestClose(){
@@ -187,7 +188,6 @@ export default class QuestionList extends React.Component{
     }
 
     render(){
-
         return(
             <MuiThemeProvider>
                 <div>
@@ -275,3 +275,5 @@ export default class QuestionList extends React.Component{
         )
     }
 }
+
+export default withRouter(PostQuestion);

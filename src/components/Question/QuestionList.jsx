@@ -32,7 +32,7 @@ class QuestionList extends React.Component{
         let questionLists = this.props.questionList['question'];
         let lists = [];
         
-        //if(numberOfQuesiton > 0) {
+        if(numberOfQuesiton > 0) {
             for(let i in questionLists){
                 let tags = []; 
                 for(let t in questionLists[i].question_tags){
@@ -66,9 +66,9 @@ class QuestionList extends React.Component{
                     </div>
                 );
             }
-        //}else{
-        //    lists.push(<div key="0">まだ質問がありません</div>)
-        //}
+        }else{
+           lists.push(<div key="0">まだ質問がありません</div>)
+        }
       
 
         return(

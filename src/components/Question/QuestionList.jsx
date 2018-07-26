@@ -45,27 +45,21 @@ class QuestionList extends React.Component{
         let questionLists = this.props.questionList['question'];
         console.log(questionLists);
         let lists = [];
-        let tagList = [];
         
         if(questionLists != undefined && questionLists != null) {
             for(let i in questionLists){
                 let tags = []; 
                 for(let t in questionLists[i].question_tags){
-                    //タグリストに重複するタグがないか判別
-                    // if(tagList.indexOf(questionLists[i].question_tags[t]['tag_name']) === -1){   
-                        //タグリストに、重複していないタグを追加
-                        tagList.push(questionLists[i].question_tags[t]['tag_name']);
-                        //表示するタグを追加
-                        tags.push(
-                            <Chip
-                                label={ questionLists[i].question_tags[t]['tag_name']}
-                                className="tags"
-                                href="#chip"
-                                clickable
-                                key={t}
-                            />
-                        );
-                    // }
+                    //表示するタグを追加
+                    tags.push(
+                        <Chip
+                            label={ questionLists[i].question_tags[t]['tag_name']}
+                            className="tags"
+                            href="#chip"
+                            clickable
+                            key={t}
+                        />
+                    );  
                 }
 
                 lists.push(

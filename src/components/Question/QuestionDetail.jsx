@@ -51,7 +51,7 @@ export default class QuestionList extends React.Component{
         this.state = {
             open: false,
             question: {},
-            questionId: '',
+            question_id: '',
             student_id: '',
             student_name: '',
             body: '',
@@ -62,10 +62,9 @@ export default class QuestionList extends React.Component{
         const question_id = localStorage.getItem('question_id');
         const student_name = localStorage.getItem('student_name');
         const student_id = localStorage.getItem('student_id');
-        localStorage.removeItem('question_id');
 
         this.setState({
-            questionId:question_id,
+            question_id:question_id,
             student_name:student_name,
             student_id:student_id,
         });
@@ -114,7 +113,7 @@ export default class QuestionList extends React.Component{
         params.append('body',body);
         params.append('jwt',jwt);
 
-        axios.post('question/answer/post',params).then(
+        axios.post('/question/answer/post',params).then(
             (r)=>{
                 console.log(r);
             },

@@ -84,9 +84,9 @@ class ModalWindow extends React.Component {
     this.props.history.push('/');
   }
 
-  // onClickPostQuestion(){
-  //   this.props.history.push('question/post');
-  // }
+  onClickPostQuestion(){
+    this.props.history.push('/question');
+  }
 
   afterOpenModal() {
     // references are now sync'd and can be accessed.
@@ -153,7 +153,7 @@ class ModalWindow extends React.Component {
                   onClick={this.closeModal}
                   color="primary"
               >
-                <Link to="/question/post"><QuestionAnswer style={Object.assign({},...[styles.buttonIcons])} /></Link>
+                <Link to="/question"><QuestionAnswer style={Object.assign({},...[styles.buttonIcons])} /></Link>
               </Button>
               <p style={Object.assign({},...[styles.centering])}>質問</p>
             </div>

@@ -106,12 +106,14 @@ export default class QuestionList extends React.Component{
         let student_id = this.state.student_id;
         let question_id = this.state.question_id;
         let body = this.state.body;
+        let jwt = localStorage.getItem('jwt');
 
         let parsms = new URLSearchParams();
 
         parsms.append('student_id',student_id);
         params.append('question_id',question_id);
         params.append('body',body);
+        params.append('jwt',jwt);
 
         axios.post('question/answer/post',params).then(
             (r)=>{

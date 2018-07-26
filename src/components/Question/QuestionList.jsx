@@ -18,6 +18,10 @@ const styles = {
         // backgorundColor,
         margin: '2.5% 0',
     },
+
+    centering: {
+        textAlign: 'center'
+    }
 }
 
 class QuestionList extends React.Component{
@@ -30,17 +34,18 @@ class QuestionList extends React.Component{
     render(){
 
         let questionLists = this.props.questionList['question'];
+        console.log(questionLists);
         let lists = [];
         
-        if(numberOfQuesiton > 0) {
+        if(questionLists != undefined && questionLists != null) {
             for(let i in questionLists){
+                console.log(questionLists[i]);
                 let tags = []; 
-                for(let t in questionLists[i].question_tags){
+                for(let t in questionLists[i].question_tags[0]){
                     tags.push(
                         <Chip
-                            label={ questionLists[i].question_tags[t]}
+                            label={ questionLists[i].question_tags[0][t]}
                             className="tags"
-                            component="a"
                             href="#chip"
                             clickable
                             key={t}
@@ -67,7 +72,7 @@ class QuestionList extends React.Component{
                 );
             }
         }else{
-           lists.push(<div key="0">まだ質問がありません</div>)
+           lists.push(<div key="0" style={styles.centering}>まだ質問がありません</div>)
         }
       
 

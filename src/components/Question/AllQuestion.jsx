@@ -14,68 +14,53 @@ export default class AllQuestion extends React.Component{
         super(props);
         this.state = {
             questions:{
-                question : [
-                    {
-                        question_id: '質問ID',
-                        question_title: '質問タイトル',
-                        genre: 'ジャンル',
-                        question_body: '質問内容',
-                        question_tags: ['tag1','tag2','tag3'],
-                        question_date: '質問の投稿日時',
-                        post_user: '投稿者'
-                    },	
-                    {
-                        question_id: '質問ID',
-                        question_title: '質問タイトル',
-                        genre: 'ジャンル',
-                        question_body: '質問内容',
-                        question_tags: ['tag1','tag2','tag3'],
-                        question_date: '質問の投稿日時',
-                        post_user: '投稿者'
-                    },
-                    {
-                        question_id: '質問ID',
-                        question_title: '質問タイトル',
-                        genre: 'ジャンル',
-                        question_body: '質問内容',
-                        question_tags: ['tag1','tag2','tag3'],
-                        question_date: '質問の投稿日時',
-                        post_user: '投稿者'
-                    }
-                ]
+                question:[]
             }
         }
     }
 
-    
     //マウント時に、質問を持ってくる
-    // componentWillMount(){
-    //     let jwt = localStorage.getItem('jwt');
-    //     axios.get('/question/all',{
-    //         params:{
-    //             jwt:jwt,
-    //             limit: 10,
-    //             offset:0,
-    //         }
-    //     }).then(
-    //         (res)=>{
-    //             this.setState({
-    //                 question:res
-    //             })
-    //         },
-    //         ()=>{
-    //             console.log('question get failed.');
-    //         }
-    //     ).catch(
-    //         ()=>{
-    //            console.log('connection refused.'); 
-    //         }
-    //     )
-    // }
+    componentWillMount(){
+        let jwt = localStorage.getItem('jwt');
+        axios.get('/question/all',{
+            params:{
+                jwt:jwt,
+                limit: 10,
+                offset:0,
+            }
+        }).then(
+            (res)=>{
+                //console.log(res['data']);
+
+                let tmpArray = [];
+                let val = res['data'];
+                
+                let questions = this.state.questions;
+                let newQuestions = Object.assign({},questions);
+
+                val.forEach(v => {
+                    newQuestions.question.push(v);
+                });
+ 
+                this.setState({
+                    questions:newQuestions
+                })
+
+                console.log(this.state.questions);
+            },
+            ()=>{
+                console.log('question get failed.');
+            }
+        )
+    }
 
 
     render(){
-        let question = this.state.questions['question'];
+        let question = this.state.questions;
+        // console.log(question);
+
+        console.log(this.state);
+
         return(
             <div id="wrap">
                 <HeaderMenu headerName="全ての質問" />

@@ -160,25 +160,26 @@ class PostQuestion extends React.Component{
                 }
             }
             //this.props.history.push('/user');
-        )//.catch((err)=>{
-        //     //通信失敗時のコールバック
-        //     let msg;
-        //     if(err.response == undefined){
-        //         msg = '通信に失敗しました';
-        //     }else if(err.response.status == 404){
-        //         msg = '名前かパターンが違います';
-        //     }else{
-        //         msg = '500 ISE.';
-        //     }
+        ).catch(
+            (err)=>{
+                //通信失敗時のコールバック
+                let msg;
+                if(err.response == undefined){
+                    msg = '通信に失敗しました';
+                }else if(err.response.status == 404){
+                    msg = '名前かパターンが違います';
+                }else{
+                    msg = '500 ISE.';
+                }
 
-        //     // 投稿失敗時のスナックバーのコントロール
-        //     this.setState({
-        //         open: true,
-        //         message: msg
-        //     });
+                // 投稿失敗時のスナックバーのコントロール
+                this.setState({
+                    open: true,
+                    message: msg
+                });
             
-        //     return false;
-        // });
+            return false;
+        });
     }
 
     handleRequestClose(){
@@ -197,7 +198,7 @@ class PostQuestion extends React.Component{
 
                     <div style={Object.assign({},...[styles.searchContetBox])}>
                         <InputLabel htmlFor="age-simple">なまえ</InputLabel>
-                        <p style={styles.titleSize}>{this.state.student_name}</p>
+                        <span style={styles.titleSize}>{this.state.student_name}</span>
                     </div>
 
                     <Divider />

@@ -177,7 +177,7 @@ export default class UserProfile extends Component {
 
         axios.get('/question/user/:student_id', {
             params: {
-            student_id: student_id
+                student_id: student_id
             }
         }).then(
             (res) => {

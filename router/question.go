@@ -19,7 +19,7 @@ func questionRouter(question *gin.RouterGroup) {
 	question.POST("/post", controller.PostQuestion)
 
 	//回答投稿
-	question.POST("/answer/post", nil)
+	question.POST("/answer/post", controller.PostAnswer)
 
 	//回答更新
 	question.PUT("", nil)

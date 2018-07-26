@@ -1,7 +1,6 @@
 package model
 
 import (
-	"fmt"
 	"sync"
 
 	"github.com/makki0205/gojwt"
@@ -17,15 +16,15 @@ type Question struct {
 }
 
 type ResultQuestion struct {
-	QuestionId          int      `json:"question_id"`
-	StudentName         string   `json:"post_user"`
-	GenreName           string   `json:"genre"`
-	QuestionTitle       string   `json:"question_title"`
-	QuestionBody        string   `json:"question_body"`
-	StudentProfileImage string   `json:"icon"`
-	CreateAt            string   `json:"question_date"`
-	Tags                []Tag    `json:"question_tags"`
-	Answer              []Answer `json:"answers"`
+	QuestionId          int            `json:"question_id"`
+	StudentName         string         `json:"post_user"`
+	GenreName           string         `json:"genre"`
+	QuestionTitle       string         `json:"question_title"`
+	QuestionBody        string         `json:"question_body"`
+	StudentProfileImage string         `json:"icon"`
+	CreateAt            string         `json:"question_date"`
+	Tags                []Tag          `json:"question_tags"`
+	Answer              []ResultAnswer `json:"answers"`
 }
 
 type Tag struct {
@@ -35,6 +34,14 @@ type Tag struct {
 }
 
 type Answer struct {
+	AnswerId   int
+	QuestionId int
+	StudentId  int
+	AnswerBody string
+	AnswerLike int
+}
+
+type ResultAnswer struct {
 	AnswerId    int    `json:"answer_id"`
 	StudentName string `json:"post_user"`
 	AnswerBody  string `json:"answer_body"`
@@ -44,7 +51,7 @@ type Answer struct {
 
 var questions []ResultQuestion
 var question1 ResultQuestion
-var answers []Answer
+var answers []ResultAnswer
 var tags []Tag
 var tag Tag
 
@@ -65,14 +72,13 @@ func GetAllQuestion() *[]ResultQuestion {
 	}
 
 	db.Close()
-	fmt.Println(questions)
 	return &questions
 }
 
 func GetQuestionDetail(id int) *ResultQuestion {
 	db := GormConnect()
 	c1 := make(chan []Tag)
-	c2 := make(chan []Answer)
+	c2 := make(chan []ResultAnswer)
 
 	questionColumn := "questions.question_id, students.student_name, questions.question_title, questions.question_body, questions.create_at, students.student_profile_image, genres.genre_name"
 	answerColumn := "answers.answer_id,answers.answer_body,answers.answer_like,answers.create_at,students.student_name"
@@ -184,4 +190,32 @@ func CreateQuestion(questionTitle, questionBody, jwtToken string, studentId, que
 			return question.QuestionId, err
 		}
 	}
+}
+
+func CreateAnswer(questionBody, jwtToken string, studentId, questionId int) (int, bool, error) {
+	db := GormConnect()
+	mutex := new(sync.Mutex)
+	mutex.Lock()
+	defer mutex.Unlock()
+	defer db.Close()
+
+	answer := Answer{}
+	answer.QuestionId = questionId
+	answer.StudentId = studentId
+	answer.AnswerBody = questionBody
+
+	state := false
+	_, err := jwt.Decode(jwtToken)
+	if err != nil {
+		return 0, state, err
+	} else {
+		if err := db.Create(&answer).Error; err != nil {
+			return 0, state, err
+		} else {
+			state = true
+
+			return answer.QuestionId, state, err
+		}
+	}
+
 }

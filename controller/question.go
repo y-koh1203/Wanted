@@ -12,20 +12,18 @@ import (
 )
 
 func GetAllQuestion(c *gin.Context) {
-	//jwtToken := c.Query("jwt")
-
 	result := model.GetAllQuestion()
 	c.JSON(http.StatusOK, result)
-
 }
 
 func GetQuestionDetail(c *gin.Context) {
-	id, _ := strconv.Atoi(c.Param("question_id"))
-	//jwtToken := c.Query("jwt")
-
-	result := model.GetQuestionDetail(id)
-	c.JSON(http.StatusOK, result)
-
+	id, ok := strconv.Atoi(c.Param("question_id"))
+	if ok != nil {
+		c.JSON(http.StatusNotFound, nil)
+	} else {
+		result := model.GetQuestionDetail(id)
+		c.JSON(http.StatusOK, result)
+	}
 }
 
 func PostQuestion(c *gin.Context) {
@@ -46,4 +44,24 @@ func PostQuestion(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"questionId": questionId,
 	})
+}
+
+func PostAnswer(c *gin.Context) {
+	studentId, _ := strconv.Atoi(c.PostForm("student_id"))
+	questionId, _ := strconv.Atoi(c.PostForm("question_id"))
+	questionBody := c.PostForm("body")
+	jwtToken := c.PostForm("jwt")
+
+	fmt.Printf("student_id: %d; question_id: %d; body: %s; jwtToken: %s;", studentId, questionId, questionBody, jwtToken)
+	fmt.Println("")
+
+	//questionId, state, err := model.CreateAnswer(questionBody, jwtToken, studentId, questionId)
+	//if err != nil {
+	//	c.JSON(http.StatusBadRequest, gin.H{"message": "入力が正しくない"})
+	//}
+	//c.JSON(http.StatusOK, gin.H{
+	//	"questionId": questionId,
+	//	"state":      state,
+	//})
+
 }

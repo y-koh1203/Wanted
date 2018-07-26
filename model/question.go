@@ -159,9 +159,11 @@ func GetMyAnswers(id int) *[]ResultQuestion {
 }
 
 func CreateQuestion(questionTitle, questionBody, jwtToken string, studentId, questionGenre int) (int, error) {
+	db := GormConnect()
 	mutex := new(sync.Mutex)
 	mutex.Lock()
 	defer mutex.Unlock()
+	defer db.Close()
 
 	question := Question{}
 	question.StudentId = studentId
@@ -173,7 +175,6 @@ func CreateQuestion(questionTitle, questionBody, jwtToken string, studentId, que
 	if err != nil {
 		return 0, err
 	} else {
-		db := GormConnect()
 		if err := db.Create(&question).Error; err != nil {
 			return 0, err
 		} else {
@@ -186,7 +187,6 @@ func CreateQuestion(questionTitle, questionBody, jwtToken string, studentId, que
 				db.Create(&tag)
 			}
 
-			db.Close()
 			return question.QuestionId, err
 		}
 	}
@@ -209,13 +209,17 @@ func CreateAnswer(questionBody, jwtToken string, studentId, questionId int) (int
 	if err != nil {
 		return 0, state, err
 	} else {
-		if err := db.Create(&answer).Error; err != nil {
-			return 0, state, err
-		} else {
-			state = true
-
-			return answer.QuestionId, state, err
+		count := 0
+		db.Where("question_id = ? AND student_id = ?", questionId, studentId).Find(&answer).Count(&count)
+		switch count {
+		case 0:
+			if err := db.Create(&answer).Error; err != nil {
+				return 0, state, err
+			} else {
+				state = true
+				return questionId, state, err
+			}
 		}
+		return 0, state, err
 	}
-
 }

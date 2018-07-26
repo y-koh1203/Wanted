@@ -55,13 +55,13 @@ func PostAnswer(c *gin.Context) {
 	fmt.Printf("student_id: %d; question_id: %d; body: %s; jwtToken: %s;", studentId, questionId, questionBody, jwtToken)
 	fmt.Println("")
 
-	//questionId, state, err := model.CreateAnswer(questionBody, jwtToken, studentId, questionId)
-	//if err != nil {
-	//	c.JSON(http.StatusBadRequest, gin.H{"message": "入力が正しくない"})
-	//}
-	//c.JSON(http.StatusOK, gin.H{
-	//	"questionId": questionId,
-	//	"state":      state,
-	//})
+	questionId, state, err := model.CreateAnswer(questionBody, jwtToken, studentId, questionId)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "入力が正しくない"})
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"questionId": questionId,
+		"state":      state,
+	})
 
 }

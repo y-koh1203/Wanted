@@ -7,8 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 import Divider from '@material-ui/core/Divider';
 import HeaderMenu from '../header/HeaderComponet'
 
@@ -79,6 +77,7 @@ export default class QuestionList extends React.Component{
             }
         }).then(
             (res) => {
+                console.log(res);
                 this.setState({
                     question: res
                 });
@@ -108,9 +107,9 @@ export default class QuestionList extends React.Component{
         let body = this.state.body;
         let jwt = localStorage.getItem('jwt');
 
-        let parsms = new URLSearchParams();
+        let params = new URLSearchParams();
 
-        parsms.append('student_id',student_id);
+        params.append('student_id',student_id);
         params.append('question_id',question_id);
         params.append('body',body);
         params.append('jwt',jwt);
@@ -130,11 +129,13 @@ export default class QuestionList extends React.Component{
     }
 
     render(){
+        let question_title = this.state.question.data;
+        console.log();
 
         return(
             <div>
-               <button onClick={this.handlePostAnswer.bind(this)}>aaa</button>
-               <div>
+                <HeaderMenu headerName="質問の詳細" />
+                <div>
                 <ExpansionPanel>
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                         <Typography>回答を投稿する</Typography>

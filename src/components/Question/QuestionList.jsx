@@ -22,7 +22,7 @@ const styles = {
     },
 
     card: {
-        width: '90vw',
+        width: '90%',
         margin: '0 auto',
         borderRadius: '10px',
     },
@@ -52,7 +52,7 @@ class QuestionList extends React.Component{
                 let tags = []; 
                 for(let t in questionLists[i].question_tags){
                     //タグリストに重複するタグがないか判別
-                    if(tagList.indexOf(questionLists[i].question_tags[t]['tag_name']) === -1){   
+                    // if(tagList.indexOf(questionLists[i].question_tags[t]['tag_name']) === -1){   
                         //タグリストに、重複していないタグを追加
                         tagList.push(questionLists[i].question_tags[t]['tag_name']);
                         //表示するタグを追加
@@ -65,7 +65,7 @@ class QuestionList extends React.Component{
                                 key={t}
                             />
                         );
-                    }
+                    // }
                 }
 
                 lists.push(

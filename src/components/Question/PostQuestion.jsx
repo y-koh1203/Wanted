@@ -164,7 +164,7 @@ class PostQuestion extends React.Component{
             (err)=>{
                 //通信失敗時のコールバック
                 let msg;
-                if(err.response == undefined){
+                if(err.response == undefined || err.response === null){
                     msg = '通信に失敗しました';
                 }else if(err.response.status == 404){
                     msg = '名前かパターンが違います';

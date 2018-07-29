@@ -3,9 +3,14 @@ import axios from 'axios';
 import { withRouter } from 'react-router';
 import QuestionList from './QuestionList';
 import HeaderMenu  from '../header/HeaderComponet';
+import TextField from '@material-ui/core/TextField';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Button from '@material-ui/core/Button';
 
 const styles = {
+    sizes: {
 
+    },
 }
 
 export default class AllQuestion extends React.Component{
@@ -65,7 +70,13 @@ export default class AllQuestion extends React.Component{
             <div id="wrap">
                 <HeaderMenu headerName="全ての質問" />
                 <div>
-
+                    <TextField
+                        id="student_class"
+                        label="クラス + しゅっせきばんごう"
+                        name="login_id"
+                        margin="normal"
+                        style={Object.assign({}, ...[styles.sizes])}
+                    />
                 </div>
 
                 <div id="question_list">

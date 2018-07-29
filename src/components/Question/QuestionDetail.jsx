@@ -44,7 +44,7 @@ const styles = {
 
 }
 
-export default class QuestionList extends React.Component{
+class QuestionList extends React.Component{
 
     constructor(props) {
         super(props);
@@ -55,7 +55,10 @@ export default class QuestionList extends React.Component{
             student_id: '',
             student_name: '',
             body: '',
+            message: '',
         }
+
+        this.handleRequestClose = this.handleRequestClose.bind(this);
     }
 
     componentWillMount(){
@@ -69,12 +72,7 @@ export default class QuestionList extends React.Component{
             student_id:student_id,
         });
         
-        axios.get('/question/detail/:question_id', {
-            params: {
-              // ここにクエリパラメータを指定する
-              question_id: question_id
-            }
-        }).then(
+        axios.get('/question/detail/'+question_id).then(
             (res) => {
                 console.log(res);
                 this.setState({
@@ -106,6 +104,14 @@ export default class QuestionList extends React.Component{
         let body = this.state.body;
         let jwt = localStorage.getItem('jwt');
 
+        if(body == null || body == ''){
+            this.setState({
+                open:true,
+                message:'本文が未入力です'
+            });
+            return false;
+        }
+
         let params = new URLSearchParams();
 
         params.append('student_id',student_id);
@@ -116,6 +122,13 @@ export default class QuestionList extends React.Component{
         axios.post('/question/answer/post',params).then(
             (r)=>{
                 console.log(r);
+                this.props.history.push('/question/detail');
+                if(r.data.state === false){
+                    this.setState({
+                        open:true,
+                        message: 'この質問にはすでに回答しています'
+                    })
+                }
             },
             ()=>{
                 console.log(0);
@@ -127,57 +140,73 @@ export default class QuestionList extends React.Component{
         )
     }
 
+    handleRequestClose(){
+        this.setState({
+          open: false,
+        });
+    }
+
     render(){
         let question_title = this.state.question.data;
         console.log();
 
         return(
-            <div>
-                <HeaderMenu headerName="質問の詳細" />
+            <MuiThemeProvider>
                 <div>
-                <ExpansionPanel>
-                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                        <Typography>回答を投稿する</Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                        <div>
-                            <div style={Object.assign({},...[styles.searchContetBox])}>
-                                <InputLabel htmlFor="age-simple">なまえ</InputLabel>
-                                <span style={styles.titleSize}>{this.state.student_name}</span>
-                            </div>
-                            
-                            <br/>
-                            <Divider />
+                    <HeaderMenu headerName="質問の詳細" />
+                    <div>
+                        <ExpansionPanel>
+                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                                <Typography>回答を投稿する</Typography>
+                            </ExpansionPanelSummary>
+                            <ExpansionPanelDetails>
+                                <div>
+                                    <div style={Object.assign({},...[styles.searchContetBox])}>
+                                        <InputLabel htmlFor="age-simple">なまえ</InputLabel>
+                                        <span style={styles.titleSize}>{this.state.student_name}</span>
+                                    </div>
+                                    
+                                    <br/>
+                                    <Divider />
 
-                            <div style={Object.assign({},...[styles.searchContetBox])}>
-                                <InputLabel htmlFor="age-simple">こたえる</InputLabel>
-                                <TextField
-                                    id="body"
-                                    label=""
-                                    multiline
-                                    rows="4"
-                                    margin="normal"
-                                    onChange={this.handleBodyTextChange.bind(this)}
-                                    style={styles.bodySize}
-                                />
-                            </div>
+                                    <div style={Object.assign({},...[styles.searchContetBox])}>
+                                        <InputLabel htmlFor="age-simple">こたえる</InputLabel>
+                                        <TextField
+                                            id="body"
+                                            label=""
+                                            multiline
+                                            rows="4"
+                                            margin="normal"
+                                            onChange={this.handleBodyTextChange.bind(this)}
+                                            style={styles.bodySize}
+                                        />
+                                    </div>
 
-                            <br/>
-                            <Divider />
+                                    <br/>
+                                    <Divider />
 
-                            <div style={Object.assign({},...[styles.centering,styles.searchContetBox])}>
-                                <Button 
-                                    variant="outlined"
-                                    onClick={this.handlePostAnswer.bind(this)}
-                                >
-                                    投稿する
-                                </Button>
-                            </div>   
-                        </div>         
-                    </ExpansionPanelDetails>
-                </ExpansionPanel>
-               </div>
-            </div>
+                                    <div style={Object.assign({},...[styles.centering,styles.searchContetBox])}>
+                                        <Button 
+                                            variant="outlined"
+                                            onClick={this.handlePostAnswer.bind(this)}
+                                        >
+                                            投稿する
+                                        </Button>
+                                    </div>   
+                                </div>         
+                            </ExpansionPanelDetails>
+                        </ExpansionPanel>
+                    </div>
+                    <Snackbar
+                        open={this.state.open}
+                        message={this.state.message}
+                        autoHideDuration={3000}
+                        onRequestClose={this.handleRequestClose}
+                    />     
+                </div>
+            </MuiThemeProvider>
         )
     }
 }
+
+export default withRouter(QuestionList);

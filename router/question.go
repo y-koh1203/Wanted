@@ -9,9 +9,9 @@ func questionRouter(question *gin.RouterGroup) {
 	//質問一覧
 	question.GET("/all", controller.GetAllQuestion)
 	//質問一覧(特定ユーザー)
-	question.GET("/user/:student_id", nil)
+	question.GET("/student/:student_id", controller.GetStudentQuestion)
 	//回答した質問一覧(特定ユーザー)
-	question.GET("/answer/user/:student_id", nil)
+	question.GET("/answer/student/:student_id", controller.GetStudentAnswer)
 	//質問詳細
 	question.GET("/detail/:question_id", controller.GetQuestionDetail)
 

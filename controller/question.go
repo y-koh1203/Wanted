@@ -26,6 +26,26 @@ func GetQuestionDetail(c *gin.Context) {
 	}
 }
 
+func GetStudentQuestion(c *gin.Context) {
+	id, ok := strconv.Atoi(c.Param("student_id"))
+	if ok != nil {
+		c.JSON(http.StatusNotFound, nil)
+	} else {
+		result := model.GetMyQuestions(id)
+		c.JSON(http.StatusOK, result)
+	}
+}
+
+func GetStudentAnswer(c *gin.Context) {
+	id, ok := strconv.Atoi(c.Param("student_id"))
+	if ok != nil {
+		c.JSON(http.StatusNotFound, nil)
+	} else {
+		result := model.GetMyAnswers(id)
+		c.JSON(http.StatusOK, result)
+	}
+}
+
 func PostQuestion(c *gin.Context) {
 	studentId, _ := strconv.Atoi(c.PostForm("student_id"))
 	questionTitle := c.PostForm("question_title")

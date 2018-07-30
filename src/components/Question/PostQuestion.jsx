@@ -11,6 +11,11 @@ import Divider from '@material-ui/core/Divider';
 import HeaderMenu from '../header/HeaderComponet'
 import ModalWindow from '../parts/modal';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const styles = {
     container: { 
@@ -41,6 +46,11 @@ const styles = {
 
     centering: { 
         textAlign: 'center',
+    },
+
+    panelSize: {
+        width: '90%',
+        margin: '0 auto',
     }
 }
 
@@ -59,6 +69,8 @@ class PostQuestion extends React.Component{
             jwt: '',
     
             select:'',
+
+            openDialog: false,
         };
 
         this.handleRequestClose = this.handleRequestClose.bind(this);
@@ -93,6 +105,51 @@ class PostQuestion extends React.Component{
         let value = e.target.value;
         this.setState({body:value});
     }
+
+    //URLをクリックした際の確認ダイアログ表示
+    handlePost(e){
+        e.preventDefault();
+
+        let question_title = this.state.question_title;
+        let body = this.state.body;
+        body = body.replace(/\r?\n/g, '');
+        let genre = this.state.genre;
+
+
+        if(question_title == ''){
+            this.setState({
+                open: true,
+                message: 'タイトルが未入力です'
+            });
+
+            return false;
+        }
+
+        if(genre == ''){
+            this.setState({
+                open: true,
+                message: '授業を選択してください'
+            });
+
+            return false;
+        }
+
+        if(body == ''){
+            this.setState({
+                open: true,
+                message: '質問本文が未入力です'
+            });
+
+            return false;
+        }
+
+        this.setState({ openDialog: true })
+    }
+    
+    //Dialogを閉じる
+    handleClose = () => {
+        this.setState({ openDialog: false });
+    };
 
     //質問の投稿処理
     handleClickSubmit(){
@@ -191,7 +248,7 @@ class PostQuestion extends React.Component{
     render(){
         return(
             <MuiThemeProvider>
-                <div>
+                <div style={styles.panelSize}>
                     <div>
                         <HeaderMenu headerName="しつもんする" />
                     </div>
@@ -257,7 +314,7 @@ class PostQuestion extends React.Component{
                     <div style={Object.assign({},...[styles.searchContetBox,styles.centering])}>
                         <Button 
                             variant="outlined"
-                            onClick={this.handleClickSubmit.bind(this)}
+                            onClick={this.handlePost.bind(this)}
                         >
                             投稿する
                         </Button>
@@ -270,7 +327,29 @@ class PostQuestion extends React.Component{
                         message={this.state.message}
                         autoHideDuration={3000}
                         onRequestClose={this.handleRequestClose}
-                    />     
+                    />
+
+                    <Dialog
+                        open={this.state.openDialog}
+                        onClose={this.handleClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">かくにん</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                投稿します。よろしいですか？
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={this.handleClose.bind(this)} color="primary">
+                                中止
+                            </Button>
+                            <Button onClick={this.handleClickSubmit.bind(this)} color="primary" autoFocus>
+                                投稿する
+                            </Button>
+                        </DialogActions>
+                    </Dialog>     
                 </div>
             </MuiThemeProvider>
         )

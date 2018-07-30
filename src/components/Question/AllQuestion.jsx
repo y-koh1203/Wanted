@@ -6,11 +6,44 @@ import HeaderMenu  from '../header/HeaderComponet';
 import TextField from '@material-ui/core/TextField';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Button from '@material-ui/core/Button';
+import ModalWindow from '../parts/modal'
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import Divider from '@material-ui/core/Divider';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const styles = {
     sizes: {
-
+        width: '50vw',
+        marginLeft: '13vw',
     },
+
+    flex: {
+        display: 'flex',
+        textAlign: 'conter',
+    },
+
+    searchContetBoxL: {
+        width: '100%',
+        margin: '0 auto',
+        textAlign: 'center',
+    },
+
+    searchContetBoxR: {
+        width: '50%',
+    },
+    
+    button: {
+        marginTop: '3vw',
+        marginLeft: '3vw',
+        width: '6vw',
+        height: '2vh',
+    }
 }
 
 export default class AllQuestion extends React.Component{
@@ -37,7 +70,6 @@ export default class AllQuestion extends React.Component{
             (res)=>{
                 //console.log(res['data']);
 
-                let tmpArray = [];
                 let val = res['data'];
                 
                 let questions = this.state.questions;
@@ -69,19 +101,42 @@ export default class AllQuestion extends React.Component{
         return(
             <div id="wrap">
                 <HeaderMenu headerName="全ての質問" />
-                <div>
-                    <TextField
-                        id="student_class"
-                        label="クラス + しゅっせきばんごう"
-                        name="login_id"
-                        margin="normal"
-                        style={Object.assign({}, ...[styles.sizes])}
-                    />
-                </div>
+              
+                <ExpansionPanel>
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                        <Typography>質問を探す</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <div style={styles.flex}>
+                            <div style={Object.assign({},...[styles.searchContetBoxL])}>
+                                <TextField
+                                    id="student_class"
+                                    label="キーワードをいれてね"
+                                    name="login_id"
+                                    margin="normal"
+                                    style={Object.assign({}, ...[styles.sizes])}
+                                />
+                            </div>
+                            <Button 
+                                variant="outlined"
+                                style={styles.button}
+                                //onClick={this.handlePostAnswer.bind(this)}
+                            >
+                                探す
+                            </Button>
+                        </div>
+                    </ExpansionPanelDetails>
+                </ExpansionPanel>
+
+                <Divider />
 
                 <div id="question_list">
                     <QuestionList questionList={question} />
                 </div>
+
+                <div>
+                    <ModalWindow />
+                </div>        
             </div>
         )
     }

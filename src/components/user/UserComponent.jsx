@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import HeaderMenu from '../header/HeaderComponet';
+import axios from 'axios';
 
 import ModalWindow from '../parts/modal'
 import Typography from '@material-ui/core/Typography';
@@ -36,15 +37,17 @@ const styles = {
     icon_circle : {
        width: '30%',
        verticalAlign: 'middle',
+       textAlign: 'center',
        borderRadius:'30px 0 0 0',
     },
 
     bigAvatar: {
         width: '14vw',
         height: 'auto',
-        margin: '7vh auto 0 auto',
+        margin: '6vh auto 0 auto',
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginLeft: '20vw'
     },
 
     nameBox: {
@@ -117,6 +120,11 @@ const styles = {
         fontSize: '2.6vh',
         fontWeight: 'lighter',
         marginBottom: '2%'
+    },
+
+    largeText: {
+        fontWeight: 'bold',
+        fontSize: '2em',
     }
 }
 
@@ -136,30 +144,11 @@ export default class UserProfile extends Component {
 
     state = {
         value: 0,
-        questionList:{
-            question : [
-                {
-                    question_id: 11,
-                    question_title: "算数の問題がわかりません",
-                    genre: "算数",
-                    question_body: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                    question_tags: ["算数","数学","情報"],
-                    question_date: "2017/07/07/sun",
-                    post_user: "ymko",
-                    icon: "/path"
-                },	
-                {
-                    question_id: 12,
-                    question_title: 11,
-                    genre: 11,
-                    question_body: 11,
-                    question_tags: [1,2,3],
-                    question_date: '2017/07/07/sun',
-                    post_user: 'ymko',
-                    icon: '/path'
-                },
-            ]
-        }
+        questions:{
+            question : []
+        },
+        taughtLength: 0,
+        heardLength: 0,
     };
     
     handleChange = (event, value) => {
@@ -168,59 +157,70 @@ export default class UserProfile extends Component {
 
     //質問表示の初期状態
     componentWillMount(){
-        this.handleTaughtQuestionAll;
+        this.handleTaughtQuestionAll();
     }
 
     //全ての教えた質問を取得する
     handleTaughtQuestionAll(){
         let student_id = localStorage.getItem('student_id');
+        console.log(student_id);
 
-        axios.get('/question/user/:student_id', {
-            params: {
-                student_id: student_id
-            }
-        }).then(
+        axios.get('/question/answer/student/'+student_id).then(
             (res) => {
-                resolve(res);
-            },
+                let val = res['data'];
+                
+                let questions = this.state.questions;
+                let newQuestions = Object.assign({},questions);
+                newQuestions.question = [];
 
-            () => {
-                reject();
-            }
-        ).catch(
-            ()=>{
+                val.forEach(v => {
+                    newQuestions.question.push(v);
+                });                
+ 
+                this.setState({
+                    questions: newQuestions,
+                    taughtLength: newQuestions.question.length,
+                })
 
+                console.log(this.state.questions);
             }
-        );
+        );       
     }
 
     //全ての聞いた質問を取得する
     handleHeardQuestionAll(){
         let student_id = localStorage.getItem('student_id');
 
-        const promise = new Promise((resolve ,reject) => {
-            axios.get('/question/answer/user/:student_id', {
-                params: {
-                  student_id: student_id
-                }
-            }).then(
-                (res) => {
-                    resolve(res);
-                },
+        axios.get('/question/student/'+student_id).then(
+            (res) => {
+                
+                let val = res['data'];
+                console.log(val);
+                
+                let questions = this.state.questions;
+                let newQuestions = Object.assign({},questions);
+                newQuestions.question = [];
 
-                () => {
-                    reject();
-                }
-            );
-        });
+                val.forEach(v => {
+                    newQuestions.question.push(v);
+                });
+ 
+                this.setState({
+                    questions: newQuestions,
+                    heardLength: newQuestions.question.length
+                });
 
-        promise.then(
-            (res)=>{
+                console.log(this.state.questions);
+            },
 
+            () => {
+                console.log('err');
             }
-        ).catch(()=>{
-
-        });
+        ).catch(
+            ()=>{
+                console.log('err');
+            }
+        );
     }
 
     render() {
@@ -263,6 +263,25 @@ export default class UserProfile extends Component {
                             <Divider />
                         </div>
 
+                        <div>
+                            {value === 0 && 
+                                <div style={{margin:'1.5vh 0'}}>
+                                    <p style={styles.centering}>教えた回数</p>
+                                    <p style={Object.assign({},...[styles.centering,styles.largeText])}>{this.state.taughtLength}回</p>
+                                </div>
+                                 
+                            }
+
+                            {value === 1 && 
+                                <div style={{margin:'1.5vh 0'}}>
+                                    <p style={styles.centering}>聞いた回数</p>
+                                    <p style={Object.assign({},...[styles.centering,styles.largeText])}>{this.state.heardLength}回</p>
+                                </div>
+                            }
+                          
+                            <Divider /> 
+                        </div>
+
                         <div style={Object.assign({},...[styles.tabBox])}>
                             <Paper className="root">
                                 <Tabs
@@ -274,14 +293,14 @@ export default class UserProfile extends Component {
                                     //style={Object.assign({},...[styles.paper])}
                                     centered
                                 >
-                                    <Tab label="おしえた" style={Object.assign({},...[styles.tabLabel,styles.fontMd])} />
-                                    <Tab label="きいた" style={Object.assign({},...[styles.tabLabel,styles.fontMd])}/>
+                                    <Tab label="おしえた" style={Object.assign({},...[styles.tabLabel,styles.fontMd])} onClick={this.handleTaughtQuestionAll.bind(this)}  />
+                                    <Tab label="きいた" style={Object.assign({},...[styles.tabLabel,styles.fontMd])} onClick={this.handleHeardQuestionAll.bind(this)} />
                                 </Tabs>
                             </Paper>
                             {value === 0 && 
                                 <TabContainer>
                                     <div className="taught">
-                                       <QuestionList questionList={this.state.questionList} />
+                                       <QuestionList questionList={this.state.questions} />
                                     </div>
                                 </TabContainer>
                             }
@@ -289,7 +308,7 @@ export default class UserProfile extends Component {
                             {value === 1 && 
                                 <TabContainer>
                                     <div className="heard">
-                                        <QuestionList questionList={this.state.questionList} />
+                                        <QuestionList questionList={this.state.questions} />
                                     </div>
                                 </TabContainer>
                             }

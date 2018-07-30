@@ -3,9 +3,10 @@ import Modal from 'react-modal';
 import { withStyles } from '@material-ui/core/styles';
 import QuestionAnswer from '@material-ui/icons/QuestionAnswer';
 import PersonIcon from '@material-ui/icons/Person';
-import Home from '@material-ui/icons/Home';
+import ViewList from '@material-ui/icons/ViewList';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import Menu from '@material-ui/icons/Menu';
+import ChatBuddle from '@material-ui/icons/ChatBubble';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
@@ -63,8 +64,8 @@ const styles = {
 
 
 class ModalWindow extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       modalIsOpen: false,
@@ -73,6 +74,7 @@ class ModalWindow extends React.Component {
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.onClickLogout = this.onClickLogout.bind(this);
   }
 
   openModal() {
@@ -80,7 +82,7 @@ class ModalWindow extends React.Component {
   }
 
   onClickLogout(){
-    localStorage.setItem('jwt',null);
+    localStorage.clear();
     this.props.history.push('/');
   }
 
@@ -123,18 +125,9 @@ class ModalWindow extends React.Component {
             ref={subtitle => this.subtitle = subtitle}
             style={Object.assign({},...[styles.centering,styles.headText])}
           >
-            メニュー
+          
           </h2>
           <div style={styles.flex}>
-            <div style={Object.assign({},...[styles.buttonWrap,styles.centering])}>
-              <Button 
-                  variant="outlined"
-                  onClick={this.closeModal}
-              >
-                <Link to="/"><Home style={Object.assign({},...[styles.buttonIcons])}/></Link>
-              </Button>
-              <p style={Object.assign({},...[styles.centering])}>ホーム</p>
-            </div>
 
             <div style={Object.assign({},...[styles.buttonWrap,styles.centering])}>
               <Button 
@@ -147,15 +140,25 @@ class ModalWindow extends React.Component {
               <p style={Object.assign({},...[styles.centering])}>プロフィール</p>
             </div>
 
+             <div style={Object.assign({},...[styles.buttonWrap,styles.centering])}>
+              <Button 
+                  variant="outlined"
+                  onClick={this.closeModal}
+              >
+                <Link to="/question/post"><ChatBuddle style={Object.assign({},...[styles.buttonIcons])}/></Link>
+              </Button>
+              <p style={Object.assign({},...[styles.centering])}>質問する</p>
+            </div>
+
             <div style={Object.assign({},...[styles.buttonWrap,styles.centering])}>
               <Button 
                   variant="outlined"
                   onClick={this.closeModal}
                   color="primary"
               >
-                <Link to="/question"><QuestionAnswer style={Object.assign({},...[styles.buttonIcons])} /></Link>
+                <Link to="/question"><ViewList style={Object.assign({},...[styles.buttonIcons])} /></Link>
               </Button>
-              <p style={Object.assign({},...[styles.centering])}>質問</p>
+              <p style={Object.assign({},...[styles.centering])}>質問をみる</p>
             </div>
 
             <div style={Object.assign({},...[styles.buttonWrap,styles.centering])}>

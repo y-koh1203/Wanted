@@ -8,6 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
+import Divider from '@material-ui/core/Divider';
 
 const styles = {
     container: { 
@@ -76,6 +77,12 @@ class QuestionList extends React.Component{
                             <CardActions>
                                 {tags}
                             </CardActions>
+                            <Divider />
+                            <CardContent>
+                                <Typography gutterBottom variant="description">
+                                    投稿日時： {questionLists[i].question_date}
+                                </Typography>
+                            </CardContent>
                         </Card>
                     </div>
                 );

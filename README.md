@@ -1,17 +1,17 @@
 # Wanted
 
-## Go Packeage Install Manual
-### Install gin
+## 使用したフレームワーク・ライブラリ
+### gin
     go get github.com/gin-gonic/gin
 
-### Install MySQL Driver
+### Golang MySQL Driver
     go get github.com/go-sql-driver/mysql
 
-### Install gorm
+### gorm
     go get github.com/jinzhu/gorm
     
-## Used API Service
-### goo MorphologicalAnalysisAPI
+## 使用したAPIサービス
+### goo 形態素解析API
     - https://labs.goo.ne.jp/api/jp/morphological-analysis
 
 ## Reduxの参考資料

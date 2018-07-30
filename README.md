@@ -12,9 +12,8 @@
     
 ## Used API Service
 ### goo MorphologicalAnalysisAPI
-	[goo 形態素解析](https://labs.goo.ne.jp/api/jp/morphological-analysis/)
+    - https://labs.goo.ne.jp/api/jp/morphological-analysis
 
-## Go Packeage Install Manual
-### Reduxの参考資料
+## Reduxの参考資料
     - https://qiita.com/erukiti/items/e16aa13ad81d5938374e
     - https://mae.chab.in/archives/2885

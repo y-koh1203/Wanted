@@ -55,6 +55,27 @@ var answers []ResultAnswer
 var tags []Tag
 var tag Tag
 
+func GetQuestion(searchStr string) *[]ResultQuestion {
+	db := GormConnect()
+
+	questionColumn := "questions.question_id, students.student_name, questions.question_title, questions.question_body, questions.create_at, students.student_profile_image, genres.genre_name"
+
+	db.Table("questions").
+		Select(questionColumn).
+		Joins("INNER JOIN students ON (questions.student_id = students.student_id)").
+		Joins("INNER JOIN genres ON questions.genre_id = genres.genre_id").
+		Where("questions.question_body like ?", "%"+searchStr+"%").
+		Find(&questions)
+
+	for i, question := range questions {
+		db.Model(&question).Where("question_id = ?", question.QuestionId).Find(&tags)
+		questions[i].Tags = tags
+	}
+
+	db.Close()
+	return &questions
+}
+
 func GetAllQuestion() *[]ResultQuestion {
 	db := GormConnect()
 

@@ -11,6 +11,12 @@ import (
 	"github.com/wanted/model"
 )
 
+func GetQuestion(c *gin.Context) {
+	searchStr := "数学" // c.PostForm("")
+	result := model.GetQuestion(searchStr)
+	c.JSON(http.StatusOK, result)
+}
+
 func GetAllQuestion(c *gin.Context) {
 	result := model.GetAllQuestion()
 	c.JSON(http.StatusOK, result)

@@ -2,10 +2,7 @@ package controller
 
 import (
 	"net/http"
-
 	"strconv"
-
-	"fmt"
 
 	"github.com/gin-gonic/gin"
 	"github.com/wanted/model"
@@ -57,11 +54,7 @@ func PostQuestion(c *gin.Context) {
 	questionTitle := c.PostForm("question_title")
 	questionBody := c.PostForm("body")
 	questionGenre, _ := strconv.Atoi(c.PostForm("genre"))
-	fmt.Println(questionGenre)
 	jwtToken := c.PostForm("jwt")
-
-	fmt.Printf("student_id: %d; question_title: %s; body: %s; genre: %d; jwtToken: %s;", studentId, questionTitle, questionBody, questionGenre, jwtToken)
-	fmt.Println("")
 
 	questionId, err := model.CreateQuestion(questionTitle, questionBody, jwtToken, studentId, questionGenre)
 	if err != nil {
@@ -77,9 +70,6 @@ func PostAnswer(c *gin.Context) {
 	questionId, _ := strconv.Atoi(c.PostForm("question_id"))
 	questionBody := c.PostForm("body")
 	jwtToken := c.PostForm("jwt")
-
-	fmt.Printf("student_id: %d; question_id: %d; body: %s; jwtToken: %s;", studentId, questionId, questionBody, jwtToken)
-	fmt.Println("")
 
 	questionId, state, err := model.CreateAnswer(questionBody, jwtToken, studentId, questionId)
 	if err != nil {

@@ -1,6 +1,8 @@
 package model
 
 import (
+	"fmt"
+	"sort"
 	"sync"
 
 	"github.com/makki0205/gojwt"
@@ -47,6 +49,11 @@ type ResultAnswer struct {
 	AnswerBody  string `json:"answer_body"`
 	AnswerLike  int    `json:"like"`
 	CreateAt    string `json:"answer_date"`
+}
+
+type sortApproximation struct {
+	Key   int
+	Value int
 }
 
 var questions []ResultQuestion
@@ -179,6 +186,13 @@ func GetMyAnswers(id int) *[]ResultQuestion {
 	return &questions
 }
 
+func GetNotification(id int) *[]ResultQuestion {
+	db := GormConnect()
+
+	db.Close()
+	return &questions
+}
+
 func CreateQuestion(questionTitle, questionBody, jwtToken string, studentId, questionGenre int) (int, error) {
 	db := GormConnect()
 	mutex := new(sync.Mutex)
@@ -208,8 +222,40 @@ func CreateQuestion(questionTitle, questionBody, jwtToken string, studentId, que
 				db.Create(&tag)
 			}
 
+			questionColumn := "questions.question_id, students.student_name, questions.question_title, questions.question_body, questions.create_at, students.student_profile_image, genres.genre_name"
+
+			db.Table("questions").
+				Select(questionColumn).
+				Joins("INNER JOIN students ON (questions.student_id = students.student_id)").
+				Joins("INNER JOIN genres ON questions.genre_id = genres.genre_id").
+				Where("questions.genre_id = ?", question.GenreId).
+				Not("questions.question_id = ?", question.QuestionId).
+				Find(&questions)
+
+			standard := 50
+			result := map[int]int{}
+			for _, question := range questions {
+				fmt.Println(questionBody, question.QuestionBody)
+				approximation := analysis.LevenshteinDistance(questionBody, question.QuestionBody)
+				if standard >= approximation {
+					result[question.QuestionId] = approximation
+				}
+			}
+
+			var ss []sortApproximation
+			for k, v := range result {
+				ss = append(ss, sortApproximation{k, v})
+			}
+
+			sort.Slice(ss, func(i, j int) bool {
+				return ss[i].Value < ss[j].Value
+			})
+
+			fmt.Println("先頭", ss[0].Key, ss[0].Value)
+
 			return question.QuestionId, err
 		}
+
 	}
 }
 

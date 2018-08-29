@@ -15,6 +15,12 @@ func questionRouter(question *gin.RouterGroup) {
 	//質問詳細
 	question.GET("/detail/:question_id", controller.GetQuestionDetail)
 
+	// 質問検索
+	question.GET("/search", controller.GetQuestion)
+
+	// 質問のお知らせ
+	question.GET("/notification")
+
 	//質問投稿
 	question.POST("/post", controller.PostQuestion)
 

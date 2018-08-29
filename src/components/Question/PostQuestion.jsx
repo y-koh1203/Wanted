@@ -74,6 +74,7 @@ class PostQuestion extends React.Component{
         };
 
         this.handleRequestClose = this.handleRequestClose.bind(this);
+        this.handleClickSubmit = this.handleClickSubmit.bind(this);
     }
 
     //マウント時にLocalStorageから必要な情報を取得する
@@ -207,6 +208,7 @@ class PostQuestion extends React.Component{
 
             (r)=>{
                 console.log(0);
+                this.props.history.push('/user');
                 if(r.response.status === 400){
                     this.setState({
                         open: true,
@@ -216,7 +218,6 @@ class PostQuestion extends React.Component{
                     return false;
                 }
             }
-            //this.props.history.push('/user');
         ).catch(
             (err)=>{
                 //通信失敗時のコールバック
@@ -254,14 +255,14 @@ class PostQuestion extends React.Component{
                     </div>
 
                     <div style={Object.assign({},...[styles.searchContetBox])}>
-                        <InputLabel htmlFor="age-simple">なまえ</InputLabel>
+                        <InputLabel htmlFor="age-simple">名前</InputLabel>
                         <span style={styles.titleSize}>{this.state.student_name}</span>
                     </div>
 
                     <Divider />
 
                     <div style={Object.assign({},...[styles.searchContetBox])}>
-                        <InputLabel htmlFor="age-simple">たいとる</InputLabel>
+                        <InputLabel htmlFor="age-simple">タイトル</InputLabel>
                         <TextField
                             id="title"
                             label="質問タイトル"
@@ -274,7 +275,7 @@ class PostQuestion extends React.Component{
                     <Divider />
 
                     <div style={Object.assign({},...[styles.searchContetBox])}>
-                        <InputLabel htmlFor="age-simple">じゅぎょう</InputLabel>
+                        <InputLabel htmlFor="age-simple">科目</InputLabel>
                         <Select
                             value={this.state.genre}
                             onChange={this.handleSelectChange.bind(this)}
@@ -297,7 +298,7 @@ class PostQuestion extends React.Component{
                     <Divider />
 
                     <div style={Object.assign({},...[styles.searchContetBox])}>
-                        <InputLabel htmlFor="age-simple">きくこと</InputLabel>
+                        <InputLabel htmlFor="age-simple">質問</InputLabel>
                         <TextField
                             id="body"
                             label=""

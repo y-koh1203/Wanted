@@ -152,7 +152,7 @@ class Login extends React.Component{
                         <div style={Object.assign({}, ...[styles.centering, styles.padd])}>
                             <TextField
                                 id="student_class"
-                                label="クラス + しゅっせきばんごう"
+                                label="学年 + クラス + しゅっせきばんごう"
                                 name="login_id"
                                 margin="normal"
                                 style={Object.assign({}, ...[styles.sizes])}
@@ -162,22 +162,22 @@ class Login extends React.Component{
                         <div style={Object.assign({}, ...[styles.centering, styles.padd])}>              
                             <div style={Object.assign({},...[styles.flexRow,styles.patternsWrap])}>
                                 <div className="animal_image_pattern" style={Object.assign({},...[styles.patternImgWrap])}>
-                                    {/* <img src="/assets/images/dog_img.png" alt="" style={styles.patterImg}/> */}
+                                    <img src="/assets/images/dog_img.png" alt="" style={styles.patterImg}/>
                                     <input type="radio" name="pattern" id="" value="1" />val1
                                 </div>
 
                                 <div className="animal_image_pattern" style={Object.assign({},...[styles.patternImgWrap])}>
-                                    {/* <img src="/assets/images/cat_img.png" alt="" style={styles.patterImg}/> */}
+                                    <img src="/assets/images/cat_img.png" alt="" style={styles.patterImg}/>
                                     <input type="radio" name="pattern" id="" value="2" />val2
                                 </div>
 
                                 <div className="animal_image_pattern" style={Object.assign({},...[styles.patternImgWrap])}>
-                                    {/* <img src="/assets/images/rabbit_img.png" alt="" style={styles.patterImg}/> */}
+                                    <img src="/assets/images/rabbit_img.png" alt="" style={styles.patterImg}/>
                                     <input type="radio" name="pattern" id="" value="3" />val3
                                 </div>
 
                                 <div className="animal_image_pattern" style={Object.assign({},...[styles.patternImgWrap])}>
-                                    {/* <img src="/assets/images/lion_img.png" alt="" style={styles.patterImg}/> */}
+                                    <img src="/assets/images/lion_img.png" alt="" style={styles.patterImg}/>
                                     <input type="radio" name="pattern" id="" value="4" />val4
                                 </div>
                             </div>

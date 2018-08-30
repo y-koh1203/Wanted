@@ -112,7 +112,7 @@ export default class AllQuestion extends React.Component{
                                 <TextField
                                     id="student_class"
                                     label="キーワードをいれてね"
-                                    name="login_id"
+                                    name="query"
                                     margin="normal"
                                     style={Object.assign({}, ...[styles.sizes])}
                                 />

@@ -9,7 +9,7 @@ import (
 )
 
 func GetQuestion(c *gin.Context) {
-	searchStr := "数学" // c.PostForm("")
+	searchStr := c.PostForm("query")
 	result := model.GetQuestion(searchStr)
 	c.JSON(http.StatusOK, result)
 }

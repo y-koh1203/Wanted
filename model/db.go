@@ -10,7 +10,7 @@ func GormConnect() *gorm.DB {
 	USER := "root"
 	PASS := ""
 	PROTOCOL := ""
-	DBNAME := "test_wanted?charset=utf8&parseTime=True&loc=Local"
+	DBNAME := "wanted?charset=utf8&parseTime=True&loc=Local"
 
 	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME
 	db, err := gorm.Open(DBMS, CONNECT)

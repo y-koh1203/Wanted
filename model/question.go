@@ -1,7 +1,10 @@
 package model
 
 import (
+	"fmt"
 	"sync"
+
+	"sort"
 
 	"github.com/makki0205/gojwt"
 	"github.com/wanted/analysis"
@@ -16,7 +19,8 @@ type Question struct {
 }
 
 type ResultQuestion struct {
-	QuestionId          int            `json:"question_id"`
+	QuestionId          int `json:"question_id"`
+	StudentId           int
 	StudentName         string         `json:"post_user"`
 	GenreName           string         `json:"genre"`
 	QuestionTitle       string         `json:"question_title"`
@@ -47,6 +51,19 @@ type ResultAnswer struct {
 	AnswerBody  string `json:"answer_body"`
 	AnswerLike  int    `json:"like"`
 	CreateAt    string `json:"answer_date"`
+}
+
+type sortApproximation struct {
+	questionId    int
+	approximation int
+	StudentId     int
+}
+
+type Notification struct {
+	NotificationId int
+	QuestionId     int
+	StudentId      int
+	approximation  int
 }
 
 var questions []ResultQuestion
@@ -179,6 +196,28 @@ func GetMyAnswers(id int) *[]ResultQuestion {
 	return &questions
 }
 
+func GetNotification(id int) *[]ResultQuestion {
+	db := GormConnect()
+
+	questionColumn := "questions.question_id, students.student_name, questions.question_title, questions.question_body, questions.create_at, students.student_profile_image, genres.genre_name"
+
+	db.Table("notifications").
+		Select(questionColumn).
+		Joins("INNER JOIN questions ON (notifications.question_id = questions.question_id)").
+		Joins("INNER JOIN students ON (notifications.student_id = students.student_id)").
+		Joins("INNER JOIN genres ON (questions.genre_id = genres.genre_id)").
+		Where("notifications.student_id = ?", id).
+		Find(&questions)
+
+	for i, question := range questions {
+		db.Model(&question).Where("question_id = ?", question.QuestionId).Find(&tags)
+		questions[i].Tags = tags
+	}
+
+	db.Close()
+	return &questions
+}
+
 func CreateQuestion(questionTitle, questionBody, jwtToken string, studentId, questionGenre int) (int, error) {
 	db := GormConnect()
 	mutex := new(sync.Mutex)
@@ -208,8 +247,42 @@ func CreateQuestion(questionTitle, questionBody, jwtToken string, studentId, que
 				db.Create(&tag)
 			}
 
+			questionColumn := "questions.question_id, students.student_id, students.student_name, questions.question_title, questions.question_body, questions.create_at, students.student_profile_image, genres.genre_name"
+
+			db.Table("questions").
+				Select(questionColumn).
+				Joins("INNER JOIN students ON (questions.student_id = students.student_id)").
+				Joins("INNER JOIN genres ON questions.genre_id = genres.genre_id").
+				Where("questions.genre_id = ?", question.GenreId).
+				Not("questions.question_id = ?", question.QuestionId).
+				Find(&questions)
+
+			standard := 50
+			var ss []sortApproximation
+			for _, question := range questions {
+				fmt.Println(questionBody, question.QuestionBody)
+				approximation := analysis.LevenshteinDistance(questionBody, question.QuestionBody)
+				if standard >= approximation {
+					ss = append(ss, sortApproximation{question.QuestionId, approximation, question.StudentId})
+				}
+			}
+
+			if ss != nil {
+				sort.Slice(ss, func(i, j int) bool {
+					return ss[i].approximation < ss[j].approximation
+				})
+
+				notification := Notification{}
+				notification.QuestionId = ss[0].questionId
+				notification.StudentId = ss[0].StudentId
+				notification.approximation = ss[0].approximation
+
+				db.Create(&notification)
+			}
+
 			return question.QuestionId, err
 		}
+
 	}
 }
 

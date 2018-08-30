@@ -1,4 +1,4 @@
-DBNAME:=test_wanted
+DBNAME:=wanted
 ENV:=development
 
 run:
